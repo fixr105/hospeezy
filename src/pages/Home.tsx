@@ -1123,6 +1123,45 @@ const Home = () => {
                   </div>
                 )}
               </div>
+
+              {/* Benefits Section */}
+              <div className="mt-8 space-y-4">
+                <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-green-100 p-2 rounded-full">
+                      <CheckCircle className="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-green-800 text-sm">Always Free</h5>
+                      <p className="text-green-700 text-xs">Get your first hospital option completely free, no payment required</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-blue-100 p-2 rounded-full">
+                      <Shield className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-blue-800 text-sm">Verified Hospitals</h5>
+                      <p className="text-blue-700 text-xs">All our partner hospitals are verified for quality and safety</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-purple-100 p-2 rounded-full">
+                      <Heart className="h-5 w-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-purple-800 text-sm">Real Savings</h5>
+                      <p className="text-purple-700 text-xs">Families save an average of ₹85,000 on their medical bills</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
