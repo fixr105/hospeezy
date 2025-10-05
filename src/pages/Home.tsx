@@ -943,7 +943,7 @@ const Home = () => {
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="text-center">
                   <div className="bg-red-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
@@ -1164,7 +1164,7 @@ const Home = () => {
               </div>
 
               {/* Benefits Section */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="text-center">
                     <div className="bg-red-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
