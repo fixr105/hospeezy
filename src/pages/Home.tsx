@@ -66,7 +66,7 @@ const Home = () => {
   const [otherLocationSuccess, setOtherLocationSuccess] = useState(false);
   
   // Toggle state for service selection
-  const [selectedService, setSelectedService] = useState<'medical' | 'home'>('medical');
+  const [selectedService, setSelectedService] = useState<'medical' | 'home'>('home');
 
   const procedureTypes = [
     'Angiography',
@@ -643,7 +643,7 @@ const Home = () => {
                       : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
                   }`}
                 >
-                  @Home Tests
+                  @Home Services
                 </button>
               </div>
             </div>
