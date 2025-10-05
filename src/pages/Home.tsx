@@ -64,6 +64,9 @@ const Home = () => {
   });
   const [otherLocationSubmitting, setOtherLocationSubmitting] = useState(false);
   const [otherLocationSuccess, setOtherLocationSuccess] = useState(false);
+  
+  // Toggle state for service selection
+  const [selectedService, setSelectedService] = useState<'medical' | 'home'>('medical');
 
   const procedureTypes = [
     'Angiography',
@@ -618,11 +621,43 @@ const Home = () => {
             <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
               Choose the service that best fits your healthcare needs
             </p>
+            
+            {/* Service Toggle */}
+            <div className="flex justify-center mb-12">
+              <div className="bg-gray-100 p-2 rounded-2xl flex space-x-2">
+                <button
+                  onClick={() => setSelectedService('medical')}
+                  className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                    selectedService === 'medical'
+                      ? 'bg-red-600 text-white shadow-lg transform scale-105'
+                      : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
+                  }`}
+                >
+                  Medical Procedures
+                </button>
+                <button
+                  onClick={() => setSelectedService('home')}
+                  className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+                    selectedService === 'home'
+                      ? 'bg-red-600 text-white shadow-lg transform scale-105'
+                      : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
+                  }`}
+                >
+                  @Home Tests
+                </button>
+              </div>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 transition-all duration-500 ${
+            selectedService === 'medical' ? 'lg:grid-cols-[2fr_1fr]' : 'lg:grid-cols-[1fr_2fr]'
+          }`}>
             {/* Left Column - Hospital Rates */}
-            <div className="bg-white rounded-3xl p-8 shadow-xl">
+            <div className={`bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 ${
+              selectedService === 'medical' 
+                ? 'transform scale-105 shadow-2xl ring-4 ring-red-200' 
+                : 'opacity-60 blur-sm transform scale-95'
+            }`}>
               <div className="text-center mb-8">
                 <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
                   <FormInput className="h-12 w-12 text-red-600" />
@@ -922,7 +957,11 @@ const Home = () => {
             </div>
             
             {/* Right Column - 2D Echo Complete Booking */}
-            <div className="bg-white rounded-3xl p-8 shadow-xl">
+            <div className={`bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 ${
+              selectedService === 'home' 
+                ? 'transform scale-105 shadow-2xl ring-4 ring-red-200' 
+                : 'opacity-60 blur-sm transform scale-95'
+            }`}>
               <div className="text-center mb-8">
                 <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
                   <Heart className="h-12 w-12 text-red-600" />
