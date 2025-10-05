@@ -656,7 +656,7 @@ const Home = () => {
             <div className={`bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 ${
               selectedService === 'medical' 
                 ? 'transform scale-105 shadow-2xl ring-4 ring-red-200' 
-                : 'opacity-60 blur-sm transform scale-95'
+                : 'opacity-60 blur-sm transform scale-95 lg:block hidden'
             }`}>
               <div className="text-center mb-8">
                 <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
@@ -960,7 +960,7 @@ const Home = () => {
             <div className={`bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 ${
               selectedService === 'home' 
                 ? 'transform scale-105 shadow-2xl ring-4 ring-red-200' 
-                : 'opacity-60 blur-sm transform scale-95'
+                : 'opacity-60 blur-sm transform scale-95 lg:block hidden'
             }`}>
               <div className="text-center mb-8">
                 <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
