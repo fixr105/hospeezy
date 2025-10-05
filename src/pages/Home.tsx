@@ -608,32 +608,51 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Tools Section */}
+      {/* Combined Services Section - 2 Column Layout */}
       <section id="tools" className="py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center mb-16">
-          <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
-            Get Better Hospital Rates,
-            <br />
-            <span className="text-red-600">Save Money Instantly</span>
-          </h2>
-          <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
-            Tell us about your procedure. Our AI finds you better hospital rates in seconds.
-          </p>
-        </div>
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          {/* Main Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
+              Our Services
+            </h2>
+            <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
+              Choose the service that best fits your healthcare needs
+            </p>
+          </div>
 
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-12 shadow-xl">
-            <div className="text-center mb-8">
-              <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <FormInput className="h-12 w-12 text-red-600" />
+          {/* 2 Column Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            {/* Left Column - Hospital Rates */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                  <Heart className="w-4 h-4 mr-2" />
+                  General Healthcare
+                </div>
+                <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  Get Better Hospital Rates,
+                  <br />
+                  <span className="text-red-600">Save Money Instantly</span>
+                </h3>
+                <p className="text-xl text-gray-600 mb-8">
+                  Tell us about your procedure. Our AI finds you better hospital rates in seconds.
+                </p>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Tell Us About Your Procedure
-              </h3>
-              <p className="text-xl text-gray-600">
-                Fill in the details below and we'll find you better hospital rates.
-              </p>
-            </div>
+
+              {/* Hospital Rates Form */}
+              <div className="text-center mb-8">
+                <div className="bg-red-50 p-6 rounded-full w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+                  <FormInput className="h-10 w-10 text-red-600" />
+                </div>
+                <h4 className="text-2xl font-bold text-gray-900 mb-4">
+                  Tell Us About Your Procedure
+                </h4>
+                <p className="text-lg text-gray-600">
+                  Fill in the details below and we'll find you better hospital rates.
+                </p>
+              </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-8">
               <div>
@@ -919,236 +938,355 @@ const Home = () => {
                 </div>
               ))}
             </div>
+            </div>
+
+            {/* Right Column - 2D Echo */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl">
+              <div className="text-center mb-8">
+                <div className="inline-flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+                  <Heart className="w-4 h-4 mr-2" />
+                  Thane Exclusive Service
+                </div>
+                <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                  Get "2D Echo At Home in Thane"
+                </h3>
+                <h4 className="text-2xl lg:text-3xl font-bold text-red-600 mb-4">
+                  2D Echo at Home – Thane Exclusive
+                </h4>
+                <p className="text-lg text-gray-600 mb-8">
+                  Doctor-supervised heart checkup at your doorstep.<br />
+                  <span className="font-semibold text-green-600">Reports delivered within 6 hours</span>
+                </p>
+            
+                {/* CTA Buttons */}
+                <div className="flex flex-col gap-3 justify-center mb-8">
+                  <button className="bg-red-600 text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-red-700 transition-all duration-300 shadow-lg transform hover:scale-105">
+                    Book Now
+                  </button>
+                  <button className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-lg transform hover:scale-105">
+                    Check Availability
+                  </button>
+                </div>
+
+                {/* Price Display */}
+                <div className="bg-red-50 rounded-2xl p-6 shadow-lg border-2 border-red-200 mb-8">
+                  <div className="text-center">
+                    <div className="text-lg text-gray-500 line-through mb-1">₹7000 MRP</div>
+                    <div className="text-3xl font-bold text-red-600 mb-1">₹3999</div>
+                    <div className="text-base text-green-600 font-semibold">(Intro Offer)</div>
+                    <div className="text-xs text-gray-600 mt-1">Limited time offer - Save ₹3001</div>
+                  </div>
+                </div>
+
+                {/* Location Selection */}
+                <div className="mb-8">
+                  <div className="text-center mb-4">
+                    <h5 className="text-lg font-bold text-gray-900 mb-2">Select Your Location</h5>
+                    <p className="text-sm text-gray-600">Choose your area to see availability</p>
+                  </div>
+                  
+                  <select 
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-base font-semibold"
+                    value={echoLocation}
+                    onChange={(e) => setEchoLocation(e.target.value)}
+                  >
+                    <option value="">Select Location</option>
+                    <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
+                    <option value="other-location">Other Location</option>
+                  </select>
+                </div>
+
+                {/* Quick Booking Form */}
+                <div className="mb-8">
+                  <div className="text-center mb-4">
+                    <h5 className="text-lg font-bold text-gray-900 mb-2">Quick Booking</h5>
+                    <p className="text-sm text-gray-600">Fill in your details to reserve your slot</p>
+                  </div>
+            
+                  <form onSubmit={handleEchoFormSubmit} className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-1">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={echoFormData.name}
+                        onChange={handleEchoInputChange}
+                        required
+                        placeholder="Enter your full name"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-base"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-1">
+                        Mobile Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="mobile"
+                        value={echoFormData.mobile}
+                        onChange={handleEchoInputChange}
+                        required
+                        placeholder="Enter mobile number"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-base"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-1">
+                        Preferred Date *
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={echoFormData.date}
+                        onChange={handleEchoInputChange}
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-base"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-1">
+                        Time Slot *
+                      </label>
+                      <select
+                        name="timeSlot"
+                        value={echoFormData.timeSlot}
+                        onChange={handleEchoInputChange}
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-base"
+                      >
+                        <option value="">Select time slot</option>
+                        <option value="9-11">9:00 AM - 11:00 AM</option>
+                        <option value="11-1">11:00 AM - 1:00 PM</option>
+                        <option value="2-4">2:00 PM - 4:00 PM</option>
+                        <option value="4-6">4:00 PM - 6:00 PM</option>
+                      </select>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={echoSubmitting}
+                      className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 rounded-xl font-bold text-base hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {echoSubmitting ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                          <span>Booking...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Reserve Now</span>
+                          <ArrowRight className="h-5 w-5" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                </div>
+
+                {/* Success/Error Messages for Echo Booking */}
+                {echoSuccess && (
+                  <div className="my-6 p-4 bg-green-50 border-2 border-green-200 rounded-xl text-center">
+                    <div className="mb-4">
+                      <div className="bg-green-100 p-3 rounded-full w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                        <CheckCircle className="h-6 w-6 text-green-600" />
+                      </div>
+                      <h4 className="text-lg font-bold text-green-800 mb-2">Booking Confirmed!</h4>
+                      <p className="text-green-700 text-sm">
+                        Thank you for booking your 2D Echo. Our team will contact you shortly.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setEchoSuccess(false)}
+                      className="text-gray-600 hover:text-gray-800 font-semibold underline text-sm"
+                    >
+                      Book Another
+                    </button>
+                  </div>
+                )}
+                
+                {echoError && (
+                  <div className="my-6 p-4 bg-red-100 text-red-700 rounded-xl text-center font-semibold text-sm">
+                    {echoError}
+                  </div>
+                )}
+
+                {/* Learn More Button */}
+                <div className="text-center mt-6">
+                  <button 
+                    onClick={() => document.getElementById('echo-details')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-lg"
+                  >
+                    Learn More About 2D Echo
+                  </button>
+                </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2D Echo At Home Section */}
-      <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-green-50">
+      {/* Gift a Healthy Heart Section */}
+      <section className="py-24 bg-gradient-to-br from-pink-50 via-white to-red-50 relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-red-500/5"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-pink-100 rounded-full opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-red-100 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        
+        <div className="max-w-6xl mx-auto px-6 lg:px-8 relative">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center bg-pink-100 text-pink-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
+              <Heart className="w-4 h-4 mr-2" />
+              Perfect Gift for Your Loved Ones
+            </div>
+            <h2 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent mb-6">
+              Gift a Healthy Heart
+            </h2>
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              Show your love with the gift of health. Our comprehensive heart checkup package makes the perfect present for family and friends.
+            </p>
+          </div>
+
+          {/* Package Details */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50 mb-12">
+            <div className="text-center mb-8">
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">Package Includes:</h3>
+              <p className="text-lg text-gray-600">Everything needed for a complete heart health assessment</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <div className="flex items-center p-4 bg-green-50 rounded-xl border border-green-200">
+                  <div className="bg-green-100 p-3 rounded-full mr-4">
+                    <Heart className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-gray-900">2D Echo Test</h4>
+                    <p className="text-gray-600 text-sm">Complete heart ultrasound examination</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center p-4 bg-blue-50 rounded-xl border border-blue-200">
+                  <div className="bg-blue-100 p-3 rounded-full mr-4">
+                    <CheckCircle className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-gray-900">Cardiac Tests</h4>
+                    <p className="text-gray-600 text-sm">Comprehensive heart function analysis</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-center p-4 bg-purple-50 rounded-xl border border-purple-200">
+                  <div className="bg-purple-100 p-3 rounded-full mr-4">
+                    <Users className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-gray-900">Physician Visit</h4>
+                    <p className="text-gray-600 text-sm">Qualified doctor consultation at home</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center p-4 bg-yellow-50 rounded-xl border border-yellow-200">
+                  <div className="bg-yellow-100 p-3 rounded-full mr-4">
+                    <Award className="h-6 w-6 text-yellow-600" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-gray-900">Digital Certificate</h4>
+                    <p className="text-gray-600 text-sm">Official health report and certificate</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* How It Works */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50 mb-12">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl font-bold text-gray-900 mb-4">How It Works</h3>
+              <p className="text-lg text-gray-600">Simple 4-step process to get your heart checked</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {[
+                { 
+                  step: "1️⃣", 
+                  title: "Book online", 
+                  desc: "Fill the form and select your preferred slot",
+                  icon: FormInput,
+                  color: "blue"
+                },
+                { 
+                  step: "2️⃣", 
+                  title: "Doctor visits home", 
+                  desc: "Qualified physician comes to your doorstep",
+                  icon: Users,
+                  color: "green"
+                },
+                { 
+                  step: "3️⃣", 
+                  title: "Get reports in 6 hrs", 
+                  desc: "Receive detailed reports via WhatsApp/Email",
+                  icon: CheckCircle,
+                  color: "purple"
+                },
+                { 
+                  step: "4️⃣", 
+                  title: "Optional video consult", 
+                  desc: "Discuss results with our cardiologist",
+                  icon: Phone,
+                  color: "red"
+                }
+              ].map((item, index) => (
+                <div key={index} className="text-center group">
+                  <div className="relative mb-6">
+                    <div className={`bg-${item.color}-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <item.icon className={`h-8 w-8 text-${item.color}-600`} />
+                    </div>
+                    <div className="text-4xl mb-4">{item.step}</div>
+                  </div>
+                  <h5 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h5>
+                  <p className="text-gray-600">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA Section */}
+          <div className="text-center">
+            <div className="bg-gradient-to-r from-pink-500 to-red-500 rounded-3xl p-8 shadow-2xl text-white">
+              <h3 className="text-3xl font-bold mb-4">Give the Gift of Health</h3>
+              <p className="text-xl mb-6 text-pink-100">Perfect for birthdays, anniversaries, or just because you care</p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button className="bg-white text-pink-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 shadow-lg transform hover:scale-105">
+                  Buy Gift Voucher ₹3999
+                </button>
+                <div className="text-pink-100 text-sm">
+                  ✓ Valid for 6 months ✓ Transferable ✓ No expiry
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Detailed 2D Echo Section */}
+      <section id="echo-details" className="py-24 bg-gradient-to-br from-blue-50 via-white to-green-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-6">
               <Heart className="w-4 h-4 mr-2" />
-              Thane Exclusive Service
+              Complete 2D Echo Service Details
             </div>
             <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
-              Get "2D Echo At Home in Thane"
+              Full 2D Echo at Home Service
             </h2>
-            <h3 className="text-3xl lg:text-4xl font-bold text-red-600 mb-4">
-              2D Echo at Home – Thane Exclusive
-            </h3>
-            <p className="text-xl text-gray-600 mb-8">
-              Doctor-supervised heart checkup at your doorstep.<br />
-              <span className="font-semibold text-green-600">Reports delivered within 6 hours</span>
+            <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
+              Complete details about our comprehensive 2D Echo at home service
             </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <button className="bg-red-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-red-700 transition-all duration-300 shadow-lg transform hover:scale-105">
-                Book Now
-              </button>
-              <button className="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all duration-300 shadow-lg transform hover:scale-105">
-                Check Availability
-              </button>
-            </div>
-
-            {/* Price Display */}
-            <div className="bg-white rounded-2xl p-8 shadow-xl border-2 border-red-200 max-w-md mx-auto mb-12">
-              <div className="text-center">
-                <div className="text-2xl text-gray-500 line-through mb-2">₹7000 MRP</div>
-                <div className="text-4xl font-bold text-red-600 mb-2">₹3999</div>
-                <div className="text-lg text-green-600 font-semibold">(Intro Offer)</div>
-                <div className="text-sm text-gray-600 mt-2">Limited time offer - Save ₹3001</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Location Selection */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl mb-12">
-            <div className="text-center mb-8">
-              <h4 className="text-2xl font-bold text-gray-900 mb-4">Select Your Location</h4>
-              <p className="text-gray-600">Choose your area to see availability and pricing</p>
-            </div>
-            
-            <div className="max-w-md mx-auto">
-              <select 
-                className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg font-semibold"
-                value={echoLocation}
-                onChange={(e) => setEchoLocation(e.target.value)}
-              >
-                <option value="">Select Location</option>
-                <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
-                <option value="other-location">Other Location</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Booking Form for Ghodbunder Road */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl mb-12">
-            <div className="text-center mb-8">
-              <h4 className="text-2xl font-bold text-gray-900 mb-4">Book Your 2D Echo</h4>
-              <p className="text-gray-600">Fill in your details to reserve your slot</p>
-            </div>
-            
-            <form onSubmit={handleEchoFormSubmit} className="max-w-4xl mx-auto space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    value={echoFormData.name}
-                    onChange={handleEchoInputChange}
-                    required
-                    placeholder="Enter your full name"
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  />
-                </div>
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-2">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    name="mobile"
-                    value={echoFormData.mobile}
-                    onChange={handleEchoInputChange}
-                    required
-                    placeholder="Enter mobile number"
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-lg font-bold text-gray-900 mb-2">
-                  Complete Address *
-                </label>
-                <textarea
-                  name="address"
-                  value={echoFormData.address}
-                  onChange={handleEchoInputChange}
-                  required
-                  rows={3}
-                  placeholder="Enter your complete address with landmarks"
-                  className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg resize-none"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-2">
-                    Society/Building Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="society"
-                    value={echoFormData.society}
-                    onChange={handleEchoInputChange}
-                    required
-                    placeholder="Enter society or building name"
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  />
-                </div>
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-2">
-                    Preferred Date *
-                  </label>
-                  <input
-                    type="date"
-                    name="date"
-                    value={echoFormData.date}
-                    onChange={handleEchoInputChange}
-                    required
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-2">
-                    Time Slot *
-                  </label>
-                  <select
-                    name="timeSlot"
-                    value={echoFormData.timeSlot}
-                    onChange={handleEchoInputChange}
-                    required
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  >
-                    <option value="">Select time slot</option>
-                    <option value="9-11">9:00 AM - 11:00 AM</option>
-                    <option value="11-1">11:00 AM - 1:00 PM</option>
-                    <option value="2-4">2:00 PM - 4:00 PM</option>
-                    <option value="4-6">4:00 PM - 6:00 PM</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-2">
-                    Location *
-                  </label>
-                  <select
-                    name="location"
-                    value={echoFormData.location}
-                    onChange={handleEchoInputChange}
-                    required
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  >
-                    <option value="">Select location</option>
-                    <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
-                  </select>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={echoSubmitting}
-                className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-xl font-bold text-xl hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {echoSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                    <span>Booking...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Reserve Now, Pay at home!</span>
-                    <ArrowRight className="h-6 w-6" />
-                  </>
-                )}
-              </button>
-            </form>
-
-            {/* Success/Error Messages for Echo Booking */}
-            {echoSuccess && (
-              <div className="max-w-2xl mx-auto my-8 p-8 bg-green-50 border-2 border-green-200 rounded-2xl text-center">
-                <div className="mb-6">
-                  <div className="bg-green-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                    <CheckCircle className="h-8 w-8 text-green-600" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-green-800 mb-2">Booking Confirmed!</h3>
-                  <p className="text-green-700 text-lg">
-                    Thank you for booking your 2D Echo. Our team will contact you shortly to confirm your appointment.
-                  </p>
-                </div>
-                <button
-                  onClick={() => setEchoSuccess(false)}
-                  className="mt-6 text-gray-600 hover:text-gray-800 font-semibold underline"
-                >
-                  Book Another Appointment
-                </button>
-              </div>
-            )}
-            
-            {echoError && (
-              <div className="max-w-2xl mx-auto my-8 p-4 bg-red-100 text-red-700 rounded-xl text-center font-semibold">
-                {echoError}
-              </div>
-            )}
           </div>
 
           {/* Gift Box Section */}
@@ -1298,6 +1436,7 @@ const Home = () => {
                 </button>
               </div>
             )}
+            </div>
           </div>
         </div>
       </section>
