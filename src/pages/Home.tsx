@@ -610,30 +610,30 @@ const Home = () => {
 
       {/* Tools Section */}
       <section id="tools" className="py-24 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center mb-16">
-          <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
-            Get Better Hospital Rates,
-            <br />
-            <span className="text-red-600">Save Money Instantly</span>
-          </h2>
-          <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
-            Tell us about your procedure. Our AI finds you better hospital rates in seconds.
-          </p>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-12 shadow-xl">
-            <div className="text-center mb-8">
-              <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                <FormInput className="h-12 w-12 text-red-600" />
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
+              Our Services
+            </h2>
+            <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
+              Choose the service that best fits your healthcare needs
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Column - Hospital Rates */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl">
+              <div className="text-center mb-8">
+                <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                  <FormInput className="h-12 w-12 text-red-600" />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  Get Better Hospital Rates
+                </h3>
+                <p className="text-xl text-gray-600">
+                  Tell us about your procedure. Our AI finds you better hospital rates in seconds.
+                </p>
               </div>
-              <h3 className="text-3xl font-bold text-gray-900 mb-4">
-                Tell Us About Your Procedure
-              </h3>
-              <p className="text-xl text-gray-600">
-                Fill in the details below and we'll find you better hospital rates.
-              </p>
-            </div>
 
             <form onSubmit={handleFormSubmit} className="space-y-8">
               <div>
@@ -919,12 +919,66 @@ const Home = () => {
                 </div>
               ))}
             </div>
+            </div>
+            
+            {/* Right Column - 2D Echo Quick Booking */}
+            <div className="bg-white rounded-3xl p-8 shadow-xl">
+              <div className="text-center mb-8">
+                <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                  <Heart className="h-12 w-12 text-red-600" />
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  2D Echo at Home – Thane Exclusive
+                </h3>
+                <p className="text-xl text-gray-600 mb-6">
+                  Doctor-supervised heart checkup at your doorstep. Reports delivered within 6 hours.
+                </p>
+                
+                {/* Price Display */}
+                <div className="bg-red-50 rounded-2xl p-6 border-2 border-red-200 mb-6">
+                  <div className="text-center">
+                    <div className="text-lg text-gray-500 line-through mb-1">₹7000 MRP</div>
+                    <div className="text-3xl font-bold text-red-600 mb-1">₹3999</div>
+                    <div className="text-sm text-green-600 font-semibold">(Intro Offer)</div>
+                  </div>
+                </div>
+                
+                {/* Quick Location Selection */}
+                <div className="mb-6">
+                  <select 
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg font-semibold"
+                    value={echoLocation}
+                    onChange={(e) => setEchoLocation(e.target.value)}
+                  >
+                    <option value="">Select Location</option>
+                    <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
+                    <option value="other-location">Other Location</option>
+                  </select>
+                </div>
+                
+                {/* CTA Buttons */}
+                <div className="space-y-3">
+                  <button 
+                    onClick={() => document.getElementById('echo-details')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full bg-red-600 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-red-700 transition-all duration-300 shadow-lg"
+                  >
+                    Book Now
+                  </button>
+                  <button 
+                    onClick={() => document.getElementById('echo-details')?.scrollIntoView({ behavior: 'smooth' })}
+                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all duration-300 shadow-lg"
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 2D Echo At Home Section */}
-      <section className="py-24 bg-gradient-to-br from-blue-50 via-white to-green-50">
+      {/* Detailed 2D Echo Section */}
+      <section id="echo-details" className="py-24 bg-gradient-to-br from-blue-50 via-white to-green-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
