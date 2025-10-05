@@ -921,7 +921,7 @@ const Home = () => {
             </div>
             </div>
             
-            {/* Right Column - 2D Echo Quick Booking */}
+            {/* Right Column - 2D Echo Complete Booking */}
             <div className="bg-white rounded-3xl p-8 shadow-xl">
               <div className="text-center mb-8">
                 <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
@@ -940,37 +940,188 @@ const Home = () => {
                     <div className="text-lg text-gray-500 line-through mb-1">₹7000 MRP</div>
                     <div className="text-3xl font-bold text-red-600 mb-1">₹3999</div>
                     <div className="text-sm text-green-600 font-semibold">(Intro Offer)</div>
+                    <div className="text-sm text-gray-600 mt-2">Limited time offer - Save ₹3001</div>
                   </div>
                 </div>
+              </div>
+
+              {/* Location Selection */}
+              <div className="mb-8">
+                <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Select Your Location</h4>
+                <p className="text-gray-600 text-center mb-4">Choose your area to see availability and pricing</p>
+                <select 
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg font-semibold"
+                  value={echoLocation}
+                  onChange={(e) => setEchoLocation(e.target.value)}
+                >
+                  <option value="">Select Location</option>
+                  <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
+                  <option value="other-location">Other Location</option>
+                </select>
+              </div>
+
+              {/* Booking Form */}
+              <div className="mb-8">
+                <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Book Your 2D Echo</h4>
+                <p className="text-gray-600 text-center mb-6">Fill in your details to reserve your slot</p>
                 
-                {/* Quick Location Selection */}
-                <div className="mb-6">
-                  <select 
-                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg font-semibold"
-                    value={echoLocation}
-                    onChange={(e) => setEchoLocation(e.target.value)}
+                <form onSubmit={handleEchoFormSubmit} className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={echoFormData.name}
+                        onChange={handleEchoInputChange}
+                        required
+                        placeholder="Enter your full name"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Mobile Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="mobile"
+                        value={echoFormData.mobile}
+                        onChange={handleEchoInputChange}
+                        required
+                        placeholder="Enter mobile number"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Complete Address *
+                      </label>
+                      <textarea
+                        name="address"
+                        value={echoFormData.address}
+                        onChange={handleEchoInputChange}
+                        required
+                        rows={2}
+                        placeholder="Enter your complete address with landmarks"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm resize-none"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Society/Building Name *
+                      </label>
+                      <input
+                        type="text"
+                        name="society"
+                        value={echoFormData.society}
+                        onChange={handleEchoInputChange}
+                        required
+                        placeholder="Enter society or building name"
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Preferred Date *
+                      </label>
+                      <input
+                        type="date"
+                        name="date"
+                        value={echoFormData.date}
+                        onChange={handleEchoInputChange}
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Time Slot *
+                      </label>
+                      <select
+                        name="timeSlot"
+                        value={echoFormData.timeSlot}
+                        onChange={handleEchoInputChange}
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
+                      >
+                        <option value="">Select time slot</option>
+                        <option value="9-11">9:00 AM - 11:00 AM</option>
+                        <option value="11-1">11:00 AM - 1:00 PM</option>
+                        <option value="2-4">2:00 PM - 4:00 PM</option>
+                        <option value="4-6">4:00 PM - 6:00 PM</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-bold text-gray-900 mb-2">
+                        Location *
+                      </label>
+                      <select
+                        name="location"
+                        value={echoFormData.location}
+                        onChange={handleEchoInputChange}
+                        required
+                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
+                      >
+                        <option value="">Select location</option>
+                        <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <button
+                    type="submit"
+                    disabled={echoSubmitting}
+                    className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-xl font-bold text-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
                   >
-                    <option value="">Select Location</option>
-                    <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
-                    <option value="other-location">Other Location</option>
-                  </select>
-                </div>
-                
-                {/* CTA Buttons */}
-                <div className="space-y-3">
-                  <button 
-                    onClick={() => document.getElementById('echo-details')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="w-full bg-red-600 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-red-700 transition-all duration-300 shadow-lg"
-                  >
-                    Book Now
+                    {echoSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <span>Booking...</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>Book Now</span>
+                        <ArrowRight className="h-5 w-5" />
+                      </>
+                    )}
                   </button>
-                  <button 
-                    onClick={() => document.getElementById('echo-details')?.scrollIntoView({ behavior: 'smooth' })}
-                    className="w-full bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-lg hover:bg-blue-700 transition-all duration-300 shadow-lg"
-                  >
-                    Learn More
-                  </button>
-                </div>
+                </form>
+
+                {/* Success/Error Messages for Echo Booking */}
+                {echoSuccess && (
+                  <div className="max-w-md mx-auto my-6 p-6 bg-green-50 border-2 border-green-200 rounded-2xl text-center">
+                    <div className="mb-4">
+                      <div className="bg-green-100 p-3 rounded-full w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                        <CheckCircle className="h-6 w-6 text-green-600" />
+                      </div>
+                      <h3 className="text-lg font-bold text-green-800 mb-2">Booking Confirmed!</h3>
+                      <p className="text-green-700 text-sm">
+                        Your 2D Echo appointment has been booked successfully. We'll contact you shortly to confirm the details.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setEchoSuccess(false)}
+                      className="text-gray-600 hover:text-gray-800 font-semibold underline text-sm"
+                    >
+                      Book Another Appointment
+                    </button>
+                  </div>
+                )}
+
+                {echoError && (
+                  <div className="max-w-md mx-auto my-6 p-4 bg-red-100 text-red-700 rounded-xl text-center font-semibold text-sm">
+                    {echoError}
+                  </div>
+                )}
               </div>
             </div>
           </div>
