@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Upload, Camera, FileText, Heart, CheckCircle, ArrowRight, Shield, Users, FormInput, Send } from 'lucide-react';
+import { Heart, CheckCircle, Shield, Users, FormInput, Send } from 'lucide-react';
 
 const Tools = () => {
   const [activeTab] = useState('form'); // Always form
   const [uploadStep, setUploadStep] = useState('upload'); // upload, processing, results
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     procedureType: '',
     roomCategory: '',
@@ -25,17 +24,6 @@ const Tools = () => {
     'Delux Room',
   ];
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setUploadedFile(file);
-      setUploadStep('processing');
-      // Simulate processing
-      setTimeout(() => {
-        setUploadStep('results');
-      }, 3000);
-    }
-  };
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

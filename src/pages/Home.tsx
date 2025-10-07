@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload, Heart, Shield, Users, ArrowRight, CheckCircle, Camera, FileText, FormInput, Send, Phone, Mail, MapPin, Clock, Award, Linkedin, Twitter, CreditCard, Smartphone, Building, Star, TrendingUp, Eye, Target } from 'lucide-react';
+import { Upload, Heart, Shield, Users, ArrowRight, CheckCircle, Camera, FileText, FormInput, Send, Phone, Mail, MapPin, Clock, Award, TrendingUp, Eye, Target } from 'lucide-react';
 import logo from "../logo.webp";
 import drRohit from "../components/Dr rohit.jpg";
 import drSwapnil from "../components/Dr swapnil.jpg";
@@ -7,8 +7,6 @@ import drManeesh from "../components/Dr maneesh.JPG";
 
 const Home = () => {
   // Tools section state
-  const [activeTab, setActiveTab] = useState('form');
-  const [uploadStep, setUploadStep] = useState('upload');
   const [formData, setFormData] = useState({
     reasonForHospitalization: '',
     patientName: '',
@@ -35,7 +33,26 @@ const Home = () => {
 
 
   // Add state for hospital result
-  const [hospitalResult, setHospitalResult] = useState<any>(null);
+  interface HospitalResult {
+    hospital: {
+      name: string;
+      location?: string;
+      original_rate: number;
+      discounted_rate: number;
+      savings: number;
+      rating: number;
+      features?: string[];
+      procedure?: string;
+      logo?: string;
+    };
+    insurance_offer?: {
+      title: string;
+      description: string;
+      cta: string;
+    };
+  }
+  
+  const [hospitalResult] = useState<HospitalResult | null>(null);
   const [modalStep, setModalStep] = useState<null | 'view' | 'claim' | 'success'>(null);
   const [claimData, setClaimData] = useState({ name: '', phone: '', city: '' });
   const [formSuccess, setFormSuccess] = useState(false);
@@ -46,6 +63,7 @@ const Home = () => {
   const [echoFormData, setEchoFormData] = useState({
     name: '',
     mobile: '',
+    email: '',
     address: '',
     society: '',
     date: '',
@@ -56,30 +74,10 @@ const Home = () => {
   const [echoSuccess, setEchoSuccess] = useState(false);
   const [echoError, setEchoError] = useState<string | null>(null);
 
-  // Other locations form state
-  const [otherLocationData, setOtherLocationData] = useState({
-    name: '',
-    mobile: '',
-    city: ''
-  });
-  const [otherLocationSubmitting, setOtherLocationSubmitting] = useState(false);
-  const [otherLocationSuccess, setOtherLocationSuccess] = useState(false);
   
   // Toggle state for service selection
   const [selectedService, setSelectedService] = useState<'medical' | 'home'>('home');
 
-  const procedureTypes = [
-    'Angiography',
-    'Angioplasty',
-    'Angiography + Angioplasty',
-  ];
-
-  const roomCategories = [
-    'General Ward',
-    'Twin sharing',
-    'Single AC room',
-    'Delux Room',
-  ];
 
 
 
@@ -130,7 +128,7 @@ const Home = () => {
         setIsSubmitting(false);
         setLoading(false);
       }
-    } catch (error) {
+    } catch {
       setError('Network error. Please check your connection or try again later.');
       setIsSubmitting(false);
       setLoading(false);
@@ -196,7 +194,7 @@ const Home = () => {
         setContactError('Message submission failed. Please try again later.');
         setContactSubmitting(false);
       }
-    } catch (error) {
+    } catch {
       setContactError('Network error. Please check your connection or try again later.');
       setContactSubmitting(false);
     }
@@ -216,6 +214,9 @@ const Home = () => {
     setEchoError(null);
 
     try {
+      // Create DateTime in the specified format
+      const appointmentDateTime = `${echoFormData.date}T${echoFormData.timeSlot}:00.000+00:00`;
+      
       const response = await fetch('https://fixrrahul.app.n8n.cloud/webhook/sandeh', {
         method: 'POST',
         headers: {
@@ -223,7 +224,15 @@ const Home = () => {
         },
         body: JSON.stringify({
           type: '2d_echo_booking',
-          ...echoFormData,
+          name: echoFormData.name,
+          mobile: echoFormData.mobile,
+          email: echoFormData.email,
+          address: echoFormData.address,
+          society: echoFormData.society,
+          date: echoFormData.date,
+          timeSlot: echoFormData.timeSlot,
+          location: echoFormData.location,
+          DateTime: appointmentDateTime,
           timestamp: new Date().toISOString(),
         }),
       });
@@ -235,6 +244,7 @@ const Home = () => {
         setEchoFormData({
           name: '',
           mobile: '',
+          email: '',
           address: '',
           society: '',
           date: '',
@@ -245,7 +255,7 @@ const Home = () => {
         setEchoError('Booking failed. Please try again later.');
         setEchoSubmitting(false);
       }
-    } catch (error) {
+    } catch {
       setEchoError('Network error. Please check your connection or try again later.');
       setEchoSubmitting(false);
     }
@@ -258,47 +268,6 @@ const Home = () => {
     });
   };
 
-  // Other locations form handler
-  const handleOtherLocationSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setOtherLocationSubmitting(true);
-
-    try {
-      const response = await fetch('https://fixrrahul.app.n8n.cloud/webhook/sandeh', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'other_location_enquiry',
-          ...otherLocationData,
-          timestamp: new Date().toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        setOtherLocationSuccess(true);
-        setOtherLocationSubmitting(false);
-        // Reset form data
-        setOtherLocationData({
-          name: '',
-          mobile: '',
-          city: ''
-        });
-      } else {
-        setOtherLocationSubmitting(false);
-      }
-    } catch (error) {
-      setOtherLocationSubmitting(false);
-    }
-  };
-
-  const handleOtherLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOtherLocationData({
-      ...otherLocationData,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const stats = [
     { number: '2,500+', label: 'Families Helped', description: 'Across India' },
@@ -307,17 +276,6 @@ const Home = () => {
     { number: '98%', label: 'Families Satisfied', description: 'With our help' },
   ];
 
-  const sampleResults = [
-    {
-      hospital: 'Apollo Hospital',
-      location: 'Mumbai',
-      originalCost: '₹3,50,000',
-      negotiatedCost: '₹2,80,000',
-      savings: '₹70,000',
-      rating: 4.8,
-      features: ['Insurance Accepted', 'Emergency Care', 'Parking Available'],
-    },
-  ];
 
   const benefits = [
     {
@@ -382,13 +340,15 @@ const Home = () => {
   ];
 
   return (
-    <div className="overflow-hidden">
+    <main className="overflow-hidden">
       {/* Hero Section */}
-      <section 
+      <header 
         id="hero" 
-        className="py-24 text-center relative overflow-hidden min-h-screen flex items-center cursor-pointer hover:bg-opacity-95 transition-all duration-300" 
-        style={{ background: 'linear-gradient(135deg, #f8d6d8 0%, #fff 50%, #f0f9ff 100%)' }}
+        className="section-spacing text-center relative overflow-hidden min-h-screen flex items-center cursor-pointer hover:bg-opacity-95 transition-all duration-300" 
+        style={{ background: 'linear-gradient(135deg, var(--color-primary-50) 0%, #fff 50%, var(--color-secondary-50) 100%)' }}
         onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
+        role="banner"
+        aria-label="Hero section - Click to get started"
       >
         {/* Hover overlay effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-blue-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
@@ -431,11 +391,11 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full group">
+        <div className="relative z-10 content-width w-full group">
           {/* Logo with enhanced animation */}
           <div className="flex justify-center mb-6 sm:mb-10 px-4 sm:px-0">
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-200 to-blue-200 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-200 to-secondary-200 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
               <img 
                 src={logo} 
                 alt="SANDEH NGO Logo" 
@@ -447,10 +407,10 @@ const Home = () => {
           {/* Enhanced animated mission badge with glow effect */}
           <div className="flex justify-center mb-10 sm:mb-12">
             <div className="relative group">
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-600 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
               <div 
-                style={{ backgroundColor: '#b91f26' }} 
-                className="relative text-white px-8 sm:px-16 lg:px-20 py-6 sm:py-8 lg:py-10 rounded-full font-bold text-xl sm:text-2xl lg:text-4xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 border-2 border-red-400"
+                className="relative text-white px-8 sm:px-16 lg:px-20 py-6 sm:py-8 lg:py-10 rounded-full font-bold text-xl sm:text-2xl lg:text-4xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 border-2 border-primary-400"
+                style={{ backgroundColor: 'var(--color-primary)' }}
               >
                 आपका संदेह हम दूर करेंगे
               </div>
@@ -460,31 +420,31 @@ const Home = () => {
           {/* Enhanced main headline with animated gradient */}
           <div className="mb-8 lg:mb-12">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 lg:mb-6">
-              <span className="bg-gradient-to-r from-red-600 via-blue-600 to-green-600 bg-clip-text text-transparent animate-pulse" style={{ animationDuration: '3s' }}>
+              <span className="bg-gradient-to-r from-primary-600 via-secondary-600 to-success-600 bg-clip-text text-transparent animate-pulse" style={{ animationDuration: '3s' }}>
                 Healthcare Savings Made Simple
               </span>
             </h1>
             
             {/* Animated subtitle */}
-            <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 max-w-5xl mx-auto leading-relaxed px-4 animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 text-width leading-relaxed px-4 animate-fade-in" style={{ animationDelay: '0.5s' }}>
               SANDEH helps families access quality healthcare without financial stress. 
-              <span className="font-semibold text-red-600"> Choose your path to better healthcare rates.</span>
+              <span className="font-semibold text-primary-600"> Choose your path to better healthcare rates.</span>
             </p>
           </div>
 
           {/* Enhanced Promise Cards with staggered animations and improved layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16 lg:mb-20 max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-16 lg:mb-20 content-width px-4">
             {/* Insurance Promise Card with enhanced animations */}
-            <div className="group bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border-2 border-blue-200 hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-3 flex flex-col h-full relative overflow-hidden">
+            <div className="group card border-2 border-secondary-200 hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-3 flex flex-col h-full relative overflow-hidden">
               {/* Background gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
                 <div className="text-center mb-6 lg:mb-8">
-                  <div className="bg-gradient-to-br from-blue-100 to-blue-200 p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-110 group-hover:rotate-12">
-                    <Heart className="h-8 w-8 sm:h-10 sm:w-10 text-blue-600 animate-pulse" style={{ animationDuration: '2s' }} />
+                  <div className="bg-gradient-to-br from-secondary-100 to-secondary-200 p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-110 group-hover:rotate-12">
+                    <Heart className="h-8 w-8 sm:h-10 sm:w-10 text-secondary-600 animate-pulse" style={{ animationDuration: '2s' }} />
                   </div>
-                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 lg:mb-3 group-hover:text-blue-700 transition-colors duration-300">If you have Insurance</h2>
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 lg:mb-3 group-hover:text-secondary-700 transition-colors duration-300">If you have Insurance</h2>
                   <p className="text-sm sm:text-base lg:text-lg text-gray-600">Complete coverage with zero additional costs</p>
                 </div>
                 
@@ -510,7 +470,7 @@ const Home = () => {
                 
                 <button
                   onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 sm:py-4 lg:py-5 rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-500 shadow-lg transform hover:scale-105 hover:-translate-y-1 mt-auto group-hover:shadow-2xl"
+                  className="btn-secondary w-full py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl transform hover:scale-105 hover:-translate-y-1 mt-auto group-hover:shadow-2xl"
                 >
                   Tell Us About Your Procedure
                 </button>
@@ -518,30 +478,30 @@ const Home = () => {
             </div>
 
             {/* Out of Pocket Promise Card with enhanced animations */}
-            <div className="group bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border-2 border-red-200 hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-3 flex flex-col h-full relative overflow-hidden">
+            <div className="group card border-2 border-primary-200 hover:shadow-3xl transition-all duration-700 transform hover:-translate-y-3 flex flex-col h-full relative overflow-hidden">
               {/* Background gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-red-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-primary-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
                 <div className="text-center mb-6 lg:mb-8">
-                  <div className="bg-gradient-to-br from-red-100 to-red-200 p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-110 group-hover:rotate-12">
-                    <Heart className="h-8 w-8 sm:h-10 sm:w-10 text-red-600 animate-pulse" style={{ animationDuration: '2s' }} />
+                  <div className="bg-gradient-to-br from-primary-100 to-primary-200 p-4 sm:p-6 rounded-full w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-110 group-hover:rotate-12">
+                    <Heart className="h-8 w-8 sm:h-10 sm:w-10 text-primary-600 animate-pulse" style={{ animationDuration: '2s' }} />
                   </div>
-                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 lg:mb-3 group-hover:text-red-700 transition-colors duration-300">If you don't have Insurance</h2>
+                  <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 lg:mb-3 group-hover:text-primary-700 transition-colors duration-300">If you don't have Insurance</h2>
                   <p className="text-sm sm:text-base lg:text-lg text-gray-600">Massive savings on quality healthcare</p>
                 </div>
                 
                 <div className="text-center mb-8 lg:mb-10 flex-grow">
-                  <div className="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 group-hover:border-red-300">
-                    <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-red-600 mb-2 lg:mb-3 animate-pulse group-hover:animate-bounce" style={{ animationDuration: '2s' }}>50% OFF</div>
+                  <div className="bg-gradient-to-br from-primary-50 to-primary-100 border-2 border-primary-200 rounded-3xl p-4 sm:p-6 lg:p-8 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 group-hover:border-primary-300">
+                    <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-600 mb-2 lg:mb-3 animate-pulse group-hover:animate-bounce" style={{ animationDuration: '2s' }}>50% OFF</div>
                     <div className="text-sm sm:text-base lg:text-xl font-semibold text-gray-900 mb-1 lg:mb-2">Flat discount on</div>
-                    <div className="text-lg sm:text-xl lg:text-2xl font-bold text-red-600 group-hover:text-red-700 transition-colors duration-300">50+ Procedures</div>
+                    <div className="text-lg sm:text-xl lg:text-2xl font-bold text-primary-600 group-hover:text-primary-700 transition-colors duration-300">50+ Procedures</div>
                   </div>
                 </div>
                 
                 <button
                   onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-3 sm:py-4 lg:py-5 rounded-xl font-bold text-base sm:text-lg lg:text-xl hover:from-red-700 hover:to-red-800 transition-all duration-500 shadow-lg transform hover:scale-105 hover:-translate-y-1 mt-auto group-hover:shadow-2xl"
+                  className="btn-primary w-full py-3 sm:py-4 lg:py-5 text-base sm:text-lg lg:text-xl transform hover:scale-105 hover:-translate-y-1 mt-auto group-hover:shadow-2xl"
                 >
                   Tell Us About Your Procedure
                 </button>
@@ -552,9 +512,9 @@ const Home = () => {
           {/* Enhanced animated trust indicators with staggered animations */}
           <div className="flex flex-wrap justify-center gap-8 sm:gap-10 text-lg text-gray-600">
             {[
-              { icon: Shield, text: 'Verified Hospitals', bgColor: 'bg-red-100', iconColor: '#b91f26' },
-              { icon: Users, text: '2,500+ Families Helped', bgColor: 'bg-blue-100', iconColor: '#b91f26' },
-              { icon: CheckCircle, text: 'Always Free Service', bgColor: 'bg-green-100', iconColor: '#b91f26' }
+              { icon: Shield, text: 'Verified Hospitals', bgColor: 'bg-primary-100', iconColor: 'var(--color-primary)' },
+              { icon: Users, text: '2,500+ Families Helped', bgColor: 'bg-secondary-100', iconColor: 'var(--color-primary)' },
+              { icon: CheckCircle, text: 'Always Free Service', bgColor: 'bg-success-100', iconColor: 'var(--color-primary)' }
             ].map((item, index) => (
               <div 
                 key={index}
@@ -564,7 +524,7 @@ const Home = () => {
                 <div className={`${item.bgColor} p-3 rounded-full group-hover:shadow-lg transition-all duration-300 transform group-hover:rotate-12`}>
                   <item.icon className="h-6 w-6" style={{ color: item.iconColor }} />
                 </div>
-                <span className="font-semibold group-hover:text-red-600 transition-colors duration-300">{item.text}</span>
+                <span className="font-semibold group-hover:text-primary-600 transition-colors duration-300">{item.text}</span>
               </div>
             ))}
           </div>
@@ -575,50 +535,56 @@ const Home = () => {
               <div className="text-sm font-semibold text-gray-600 bg-white/80 px-4 py-2 rounded-full shadow-lg">
                 Click anywhere to get started
               </div>
-              <div className="w-6 h-10 border-2 border-red-500 rounded-full flex justify-center bg-white/50">
-                <div className="w-1 h-3 bg-red-500 rounded-full mt-2 animate-pulse"></div>
+              <div className="w-6 h-10 border-2 border-primary-500 rounded-full flex justify-center bg-white/50">
+                <div className="w-1 h-3 bg-primary-500 rounded-full mt-2 animate-pulse"></div>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </header>
+
+      {/* Section Divider */}
+      <div className="section-divider"></div>
 
       {/* Problem Statement */}
-      <section className="bg-red-600 py-24 text-white">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl lg:text-6xl font-bold mb-8">
+      <section className="section-spacing" style={{ backgroundColor: 'var(--color-primary)' }}>
+        <div className="content-width text-center">
+          <h2 className="text-4xl lg:text-6xl font-bold mb-8 text-white">
             Healthcare Shouldn't Bankrupt Families
           </h2>
-          <p className="text-2xl text-red-100 mb-12 leading-relaxed max-w-4xl mx-auto">
+          <p className="text-2xl text-white/90 mb-12 leading-relaxed text-width">
             Every day, families across India face impossible choices: get the medical care they need 
             or protect their life savings. Hospital bills are confusing, prices are hidden, 
             and families often pay 2-3 times more than necessary.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
-              <div className="text-4xl font-bold mb-4">70%</div>
-              <div className="text-xl">of families go into debt for medical care</div>
+              <div className="text-4xl font-bold mb-4 text-white">70%</div>
+              <div className="text-xl text-white">of families go into debt for medical care</div>
             </div>
             <div className="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
-              <div className="text-4xl font-bold mb-4">3x</div>
-              <div className="text-xl">higher costs due to lack of transparency</div>
+              <div className="text-4xl font-bold mb-4 text-white">3x</div>
+              <div className="text-xl text-white">higher costs due to lack of transparency</div>
             </div>
             <div className="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
-              <div className="text-4xl font-bold mb-4">0</div>
-              <div className="text-xl">easy ways to compare hospital prices</div>
+              <div className="text-4xl font-bold mb-4 text-white">0</div>
+              <div className="text-xl text-white">easy ways to compare hospital prices</div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* Tools Section */}
-      <section id="tools" className="py-24 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section id="tools" className="section-spacing bg-gray-50">
+        <div className="content-width">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
               Our Services
             </h2>
-            <p className="text-2xl text-gray-600 mb-12 max-w-4xl mx-auto">
+            <p className="text-2xl text-gray-600 mb-12 text-width">
               Choose the service that best fits your healthcare needs
             </p>
             
@@ -629,7 +595,7 @@ const Home = () => {
                   onClick={() => setSelectedService('medical')}
                   className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                     selectedService === 'medical'
-                      ? 'bg-red-600 text-white shadow-lg transform scale-105'
+                      ? 'bg-primary-600 text-white shadow-lg transform scale-105'
                       : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
                   }`}
                 >
@@ -639,7 +605,7 @@ const Home = () => {
                   onClick={() => setSelectedService('home')}
                   className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
                     selectedService === 'home'
-                      ? 'bg-red-600 text-white shadow-lg transform scale-105'
+                      ? 'bg-primary-600 text-white shadow-lg transform scale-105'
                       : 'text-gray-600 hover:text-gray-800 hover:bg-gray-200'
                   }`}
                 >
@@ -649,188 +615,215 @@ const Home = () => {
             </div>
           </div>
           
-          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 transition-all duration-500 ${
+          <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 transition-all duration-500 ${
             selectedService === 'medical' ? 'lg:grid-cols-[2fr_1fr]' : 'lg:grid-cols-[1fr_2fr]'
           }`}>
             {/* Left Column - Hospital Rates */}
-            <div className={`bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 ${
+            <div className={`card transition-all duration-500 ${
               selectedService === 'medical' 
-                ? 'transform scale-105 shadow-2xl ring-4 ring-red-200' 
+                ? 'transform scale-105 shadow-2xl ring-4 ring-primary-200' 
                 : 'opacity-60 blur-sm transform scale-95 lg:block hidden'
             }`}>
-              <div className="text-center mb-8">
-                <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                  <FormInput className="h-12 w-12 text-red-600" />
+              <div className="text-center mb-6">
+                <div className="bg-primary-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <FormInput className="h-8 w-8 text-primary-600" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   Get Better Hospital Rates
                 </h3>
-                <p className="text-xl text-gray-600">
+                <p className="text-lg text-gray-600">
                   Tell us about your procedure. Our AI finds you better hospital rates in seconds.
                 </p>
               </div>
 
-            <form onSubmit={handleFormSubmit} className="space-y-8">
-              <div>
-                <label className="block text-lg font-bold text-gray-900 mb-4">
-                  Reason for Hospitalization *
-                </label>
-                <input
-                  type="text"
-                  name="reasonForHospitalization"
-                  value={formData.reasonForHospitalization}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter reason for hospitalization"
-                  className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                />
-              </div>
-
-              <div>
-                <label className="block text-lg font-bold text-gray-900 mb-4">
-                  Name of Patient *
-                </label>
-                <input
-                  type="text"
-                  name="patientName"
-                  value={formData.patientName}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter patient name"
-                  className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-4">
-                    Mobile Number *
-                  </label>
-                  <input
-                    type="tel"
-                    name="mobileNumber"
-                    value={formData.mobileNumber}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Enter mobile number"
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  />
+            <form onSubmit={handleFormSubmit} className="space-y-6">
+              {/* Step 1: Basic Info - Always Visible */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                  <h4 className="text-lg font-semibold text-gray-900">Basic Information</h4>
                 </div>
-
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-4">
-                    City *
-                  </label>
-                  <select
-                    name="city"
-                    value={formData.city}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                  >
-                    <option value="">Select city</option>
-                    <option value="mumbai-mmr">Mumbai MMR region</option>
-                    <option value="out-of-mumbai">Out of mumbai (currently unservicable)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-lg font-bold text-gray-900 mb-4">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Enter email address"
-                  className="w-full px-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-4">
-                    Current Quoted Price for Procedure *
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">₹</span>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Reason for Hospitalization *
+                    </label>
                     <input
-                      type="number"
-                      name="currentPrice"
-                      value={formData.currentPrice}
+                      type="text"
+                      name="reasonForHospitalization"
+                      value={formData.reasonForHospitalization}
                       onChange={handleInputChange}
                       required
-                      placeholder="Enter amount"
-                      className="w-full pl-12 pr-6 py-4 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg"
+                      placeholder="e.g., Heart surgery, Knee replacement"
+                      className="form-input w-full"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Patient Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="patientName"
+                      value={formData.patientName}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Full name"
+                      className="form-input w-full"
                     />
                   </div>
                 </div>
-
-                <div>
-                  <label className="block text-lg font-bold text-gray-900 mb-4">
-                    Payment Type *
-                  </label>
-                  <div className="space-y-3">
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="paymentType"
-                        value="insurance"
-                        checked={formData.paymentType === 'insurance'}
-                        onChange={handleInputChange}
-                        required
-                        className="w-5 h-5 text-red-600 border-gray-300 focus:ring-red-500"
-                      />
-                      <span className="text-lg text-gray-900">Insurance Claim needed</span>
-                    </label>
-                    <label className="flex items-center space-x-3 cursor-pointer">
-                      <input
-                        type="radio"
-                        name="paymentType"
-                        value="out-of-pocket"
-                        checked={formData.paymentType === 'out-of-pocket'}
-                        onChange={handleInputChange}
-                        required
-                        className="w-5 h-5 text-red-600 border-gray-300 focus:ring-red-500"
-                      />
-                      <span className="text-lg text-gray-900">Out of Pocket</span>
-                    </label>
-                  </div>
-                </div>
               </div>
 
-              {/* File Upload Section */}
-              <div className="bg-red-50 bg-opacity-50 border-2 border-red-200 rounded-2xl p-6 space-y-4">
-                <div className="text-center">
-                  <h3 className="text-xl font-bold text-red-800 mb-2">📋 Upload Medical Documents (optional)</h3>
-                  <p className="text-red-700">Prescriptions, medical reports, blood tests, X-rays, MRI scans, discharge summaries</p>
+              {/* Step 2: Contact & Location - Reveals when Step 1 is complete */}
+              {(formData.reasonForHospitalization && formData.patientName) && (
+                <div className="space-y-4 animate-fade-in">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                    <h4 className="text-lg font-semibold text-gray-900">Contact & Location</h4>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Mobile Number *
+                      </label>
+                      <input
+                        type="tel"
+                        name="mobileNumber"
+                        value={formData.mobileNumber}
+                        onChange={handleInputChange}
+                        required
+                        placeholder="10-digit mobile number"
+                        className="form-input w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        City *
+                      </label>
+                      <select
+                        name="city"
+                        value={formData.city}
+                        onChange={handleInputChange}
+                        required
+                        className="form-input w-full"
+                      >
+                        <option value="">Select city</option>
+                        <option value="mumbai-mmr">Mumbai MMR region</option>
+                        <option value="out-of-mumbai">Out of mumbai (currently unservicable)</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="your.email@example.com"
+                      className="form-input w-full"
+                    />
+                  </div>
                 </div>
+              )}
 
-                {/* Upload Area */}
-                <label className="cursor-pointer block">
-                  <div className="relative border-3 border-dashed border-red-300 rounded-2xl p-12 text-center hover:border-red-500 transition-all duration-300 bg-white bg-opacity-80 hover:bg-white min-h-[200px] flex items-center justify-center">
-                    {/* Translucent Heart Background */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                      <Heart className="h-32 w-32 text-red-500" />
+              {/* Step 3: Financial Details - Reveals when Step 2 is complete */}
+              {(formData.mobileNumber && formData.city && formData.email) && (
+                <div className="space-y-4 animate-fade-in">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                    <h4 className="text-lg font-semibold text-gray-900">Financial Details</h4>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Current Quoted Price *
+                      </label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">₹</span>
+                        <input
+                          type="number"
+                          name="currentPrice"
+                          value={formData.currentPrice}
+                          onChange={handleInputChange}
+                          required
+                          placeholder="Enter amount"
+                          className="form-input w-full pl-10"
+                        />
+                      </div>
                     </div>
-                    
-                    <div className="relative z-10 space-y-4">
-                      <div className="flex justify-center">
-                        <div className="bg-red-100 p-4 rounded-full">
-                          <Upload className="h-8 w-8 text-red-600" />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Payment Type *
+                      </label>
+                      <div className="space-y-3">
+                        <label className="flex items-center space-x-3 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="paymentType"
+                            value="insurance"
+                            checked={formData.paymentType === 'insurance'}
+                            onChange={handleInputChange}
+                            required
+                            className="w-5 h-5 text-primary-600 border-gray-300 focus:ring-primary-500"
+                          />
+                          <span className="text-sm text-gray-900">Insurance Claim</span>
+                        </label>
+                        <label className="flex items-center space-x-3 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="paymentType"
+                            value="out-of-pocket"
+                            checked={formData.paymentType === 'out-of-pocket'}
+                            onChange={handleInputChange}
+                            required
+                            className="w-5 h-5 text-primary-600 border-gray-300 focus:ring-primary-500"
+                          />
+                          <span className="text-sm text-gray-900">Out of Pocket</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* File Upload Section - Reveals when Step 3 is complete */}
+              {(formData.currentPrice && formData.paymentType) && (
+                <div className="bg-primary-50 bg-opacity-50 border-2 border-primary-200 rounded-2xl p-6 space-y-4 animate-fade-in">
+                  <div className="text-center">
+                    <h3 className="text-xl font-bold text-primary-800 mb-2">📋 Upload Medical Documents (optional)</h3>
+                    <p className="text-primary-700">Prescriptions, medical reports, blood tests, X-rays, MRI scans, discharge summaries</p>
+                  </div>
+
+                  {/* Upload Area */}
+                  <label className="cursor-pointer block">
+                    <div className="relative border-3 border-dashed border-primary-300 rounded-2xl p-12 text-center hover:border-primary-500 transition-all duration-300 bg-white bg-opacity-80 hover:bg-white min-h-[200px] flex items-center justify-center">
+                      {/* Translucent Heart Background */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                        <Heart className="h-32 w-32 text-primary-500" />
+                      </div>
+                      
+                      <div className="relative z-10 space-y-4">
+                        <div className="flex justify-center">
+                          <div className="bg-primary-100 p-4 rounded-full">
+                            <Upload className="h-8 w-8 text-primary-600" />
+                          </div>
                         </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-primary-800 mb-2">Drag & Drop Files Here</h4>
+                          <p className="text-primary-700">or click to browse</p>
+                        </div>
+                        <p className="text-sm text-primary-600">
+                          PDF, JPG, PNG, DOC, DOCX (Max 10MB)
+                        </p>
                       </div>
-                      <div>
-                        <h4 className="text-lg font-bold text-red-800 mb-2">Drag & Drop Files Here</h4>
-                        <p className="text-red-700">or click to browse</p>
-                      </div>
-                      <p className="text-sm text-red-600">
-                        PDF, JPG, PNG, DOC, DOCX (Max 10MB)
-                      </p>
-                    </div>
                     
                     <input
                       type="file"
@@ -870,25 +863,31 @@ const Home = () => {
                     </div>
                   </div>
                 )}
-              </div>
+                </div>
+              )}
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-red-600 text-white py-4 rounded-xl font-bold text-xl hover:bg-red-700 transition-all duration-300 shadow-lg flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                    <span>Finding Better Rates...</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="h-6 w-6" />
-                    <span>Find Better Hospital Rates</span>
-                  </>
-                )}
-              </button>
+              {/* Submit Button - Only appears when all required fields are complete */}
+              {(formData.reasonForHospitalization && formData.patientName && formData.mobileNumber && formData.city && formData.email && formData.currentPrice && formData.paymentType) && (
+                <div className="animate-fade-in">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="btn-primary w-full py-4 text-xl flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                        <span>Finding Better Rates...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="h-6 w-6" />
+                        <span>Find Better Hospital Rates</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              )}
             </form>
 
             {formSuccess && (
@@ -946,8 +945,8 @@ const Home = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
               {benefits.map((benefit, index) => (
                 <div key={index} className="text-center">
-                  <div className="bg-red-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                    <benefit.icon className="h-8 w-8 text-red-600" />
+                  <div className="bg-primary-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <benefit.icon className="h-8 w-8 text-primary-600" />
                   </div>
                   <h5 className="text-lg font-bold text-gray-900 mb-2">{benefit.title}</h5>
                   <p className="text-gray-600">{benefit.description}</p>
@@ -957,185 +956,251 @@ const Home = () => {
             </div>
             
             {/* Right Column - 2D Echo Complete Booking */}
-            <div className={`bg-white rounded-3xl p-8 shadow-xl transition-all duration-500 ${
+            <div className={`card transition-all duration-500 ${
               selectedService === 'home' 
-                ? 'transform scale-105 shadow-2xl ring-4 ring-red-200' 
+                ? 'transform scale-105 shadow-2xl ring-4 ring-primary-200' 
                 : 'opacity-60 blur-sm transform scale-95 lg:block hidden'
             }`}>
-              <div className="text-center mb-8">
-                <div className="bg-red-50 p-6 rounded-full w-24 h-24 mx-auto mb-6 flex items-center justify-center">
-                  <Heart className="h-12 w-12 text-red-600" />
+              <div className="text-center mb-6">
+                <div className="bg-primary-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                  <Heart className="h-8 w-8 text-primary-600" />
                 </div>
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
                   2D Echo at Home – Thane Exclusive
                 </h3>
-                <p className="text-xl text-gray-600 mb-6">
+                <p className="text-lg text-gray-600 mb-4">
                   Doctor-supervised heart checkup at your doorstep. Reports delivered within 6 hours.
                 </p>
                 
                 {/* Price Display */}
-                <div className="bg-red-50 rounded-2xl p-6 border-2 border-red-200 mb-6">
+                <div className="bg-primary-50 rounded-xl p-4 border-2 border-primary-200 mb-4">
                   <div className="text-center">
-                    <div className="text-lg text-gray-500 line-through mb-1">₹7000 MRP</div>
-                    <div className="text-3xl font-bold text-red-600 mb-1">₹3999</div>
-                    <div className="text-sm text-green-600 font-semibold">(Intro Offer)</div>
-                    <div className="text-sm text-gray-600 mt-2">Limited time offer - Save ₹3001</div>
+                    <div className="text-sm text-gray-500 line-through mb-1">₹7000 MRP</div>
+                    <div className="text-2xl font-bold text-primary-600 mb-1">₹3999</div>
+                    <div className="text-xs text-success-600 font-semibold">(Intro Offer)</div>
+                    <div className="text-xs text-gray-600 mt-1">Limited time offer - Save ₹3001</div>
                   </div>
                 </div>
               </div>
 
-              {/* Location Selection */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Select Your Location</h4>
-                <p className="text-gray-600 text-center mb-4">Choose your area to see availability and pricing</p>
-                <select 
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-lg font-semibold"
-                  value={echoLocation}
-                  onChange={(e) => setEchoLocation(e.target.value)}
-                >
-                  <option value="">Select Location</option>
-                  <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
-                  <option value="other-location">Other Location</option>
-                </select>
-              </div>
+              {/* Only show form if not in success state */}
+              {!echoSuccess && (
+                <>
+                  {/* Location Selection */}
+                  <div className="mb-6">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2 text-center">Select Your Location</h4>
+                    <p className="text-sm text-gray-600 text-center mb-3">Choose your area to see availability and pricing</p>
+                    <select 
+                      className="form-input w-full text-sm font-semibold"
+                      value={echoLocation}
+                      onChange={(e) => setEchoLocation(e.target.value)}
+                    >
+                      <option value="">Select Location</option>
+                      <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
+                      <option value="other-location">Other Location</option>
+                    </select>
+                  </div>
 
-              {/* Booking Form */}
-              <div className="mb-8">
-                <h4 className="text-xl font-bold text-gray-900 mb-4 text-center">Book Your 2D Echo</h4>
-                <p className="text-gray-600 text-center mb-6">Fill in your details to reserve your slot</p>
-                
-                <form onSubmit={handleEchoFormSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 gap-4">
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={echoFormData.name}
-                        onChange={handleEchoInputChange}
-                        required
-                        placeholder="Enter your full name"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
-                      />
+                  {/* Booking Form */}
+                  <div className="mb-6">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2 text-center">Book Your 2D Echo</h4>
+                    <p className="text-sm text-gray-600 text-center mb-4">Fill in your details to reserve your slot</p>
+                    
+                    <form onSubmit={handleEchoFormSubmit} className="space-y-6">
+                  {/* Step 1: Basic Info - Always Visible */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                      <h4 className="text-lg font-semibold text-gray-900">Basic Information</h4>
                     </div>
                     
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Mobile Number *
-                      </label>
-                      <input
-                        type="tel"
-                        name="mobile"
-                        value={echoFormData.mobile}
-                        onChange={handleEchoInputChange}
-                        required
-                        placeholder="Enter mobile number"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Complete Address *
-                      </label>
-                      <textarea
-                        name="address"
-                        value={echoFormData.address}
-                        onChange={handleEchoInputChange}
-                        required
-                        rows={2}
-                        placeholder="Enter your complete address with landmarks"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm resize-none"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Society/Building Name *
-                      </label>
-                      <input
-                        type="text"
-                        name="society"
-                        value={echoFormData.society}
-                        onChange={handleEchoInputChange}
-                        required
-                        placeholder="Enter society or building name"
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Preferred Date *
-                      </label>
-                      <input
-                        type="date"
-                        name="date"
-                        value={echoFormData.date}
-                        onChange={handleEchoInputChange}
-                        required
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Time Slot *
-                      </label>
-                      <select
-                        name="timeSlot"
-                        value={echoFormData.timeSlot}
-                        onChange={handleEchoInputChange}
-                        required
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
-                      >
-                        <option value="">Select time slot</option>
-                        <option value="9-11">9:00 AM - 11:00 AM</option>
-                        <option value="11-1">11:00 AM - 1:00 PM</option>
-                        <option value="2-4">2:00 PM - 4:00 PM</option>
-                        <option value="4-6">4:00 PM - 6:00 PM</option>
-                      </select>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-bold text-gray-900 mb-2">
-                        Location *
-                      </label>
-                      <select
-                        name="location"
-                        value={echoFormData.location}
-                        onChange={handleEchoInputChange}
-                        required
-                        className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-4 focus:ring-red-100 focus:border-red-500 text-sm"
-                      >
-                        <option value="">Select location</option>
-                        <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
-                      </select>
+                    <div className="grid grid-cols-1 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Full Name *
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={echoFormData.name}
+                          onChange={handleEchoInputChange}
+                          required
+                          placeholder="Enter your full name"
+                          className="form-input w-full"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Mobile Number *
+                        </label>
+                        <input
+                          type="tel"
+                          name="mobile"
+                          value={echoFormData.mobile}
+                          onChange={handleEchoInputChange}
+                          required
+                          placeholder="Enter mobile number"
+                          className="form-input w-full"
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={echoFormData.email}
+                          onChange={handleEchoInputChange}
+                          required
+                          placeholder="your.email@example.com"
+                          className="form-input w-full"
+                        />
+                      </div>
                     </div>
                   </div>
-                  
-                  <button
-                    type="submit"
-                    disabled={echoSubmitting}
-                    className="w-full bg-gradient-to-r from-red-600 to-red-700 text-white py-4 rounded-xl font-bold text-lg hover:from-red-700 hover:to-red-800 transition-all duration-300 shadow-lg flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
-                  >
-                    {echoSubmitting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                        <span>Booking...</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Book Now</span>
-                        <ArrowRight className="h-5 w-5" />
-                      </>
-                    )}
-                  </button>
-                </form>
 
-                {/* Success/Error Messages for Echo Booking */}
+                  {/* Step 2: Address Details - Reveals when Step 1 is complete */}
+                  {(echoFormData.name && echoFormData.mobile && echoFormData.email) && (
+                    <div className="space-y-4 animate-fade-in">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                        <h4 className="text-lg font-semibold text-gray-900">Address Details</h4>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 gap-4">
+                    
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Complete Address *
+                          </label>
+                          <textarea
+                            name="address"
+                            value={echoFormData.address}
+                            onChange={handleEchoInputChange}
+                            required
+                            rows={3}
+                            placeholder="Enter your complete address with landmarks"
+                            className="form-input w-full resize-none"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Society/Building Name *
+                          </label>
+                          <input
+                            type="text"
+                            name="society"
+                            value={echoFormData.society}
+                            onChange={handleEchoInputChange}
+                            required
+                            placeholder="Enter society or building name"
+                            className="form-input w-full"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 3: Appointment Details - Reveals when Step 2 is complete */}
+                  {(echoFormData.address && echoFormData.society) && (
+                    <div className="space-y-4 animate-fade-in">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-8 h-8 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                        <h4 className="text-lg font-semibold text-gray-900">Appointment Details</h4>
+                      </div>
+                      
+                      <div className="grid grid-cols-1 gap-4">
+                    
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Preferred Date *
+                          </label>
+                          <input
+                            type="date"
+                            name="date"
+                            value={echoFormData.date}
+                            onChange={handleEchoInputChange}
+                            required
+                            className="form-input w-full"
+                          />
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Exact Appointment Time *
+                          </label>
+                          <select
+                            name="timeSlot"
+                            value={echoFormData.timeSlot}
+                            onChange={handleEchoInputChange}
+                            required
+                            className="form-input w-full"
+                          >
+                            <option value="">Select exact time</option>
+                            <option value="09:00">9:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">1:00 PM</option>
+                            <option value="14:00">2:00 PM</option>
+                            <option value="15:00">3:00 PM</option>
+                            <option value="16:00">4:00 PM</option>
+                            <option value="17:00">5:00 PM</option>
+                            <option value="18:00">6:00 PM</option>
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Location *
+                          </label>
+                          <select
+                            name="location"
+                            value={echoFormData.location}
+                            onChange={handleEchoInputChange}
+                            required
+                            className="form-input w-full"
+                          >
+                            <option value="">Select location</option>
+                            <option value="ghodbunder-road">Ghodbunder Road, Thane</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Submit Button - Only appears when all required fields are complete */}
+                  {(echoFormData.name && echoFormData.mobile && echoFormData.email && echoFormData.address && echoFormData.society && echoFormData.date && echoFormData.timeSlot && echoFormData.location) && (
+                    <div className="animate-fade-in">
+                      <button
+                        type="submit"
+                        disabled={echoSubmitting}
+                        className="btn-primary w-full py-4 text-lg flex items-center justify-center space-x-3 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {echoSubmitting ? (
+                          <>
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            <span>Booking...</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>Book Now</span>
+                            <ArrowRight className="h-5 w-5" />
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                    </form>
+                  </div>
+                </>
+              )}
+
+              {/* Success/Error Messages for Echo Booking */}
                 {echoSuccess && (
                   <div className="max-w-md mx-auto my-6 p-6 bg-green-50 border-2 border-green-200 rounded-2xl text-center">
                     <div className="mb-4">
@@ -1161,14 +1226,13 @@ const Home = () => {
                     {echoError}
                   </div>
                 )}
-              </div>
 
               {/* Benefits Section */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 {benefits.map((benefit, index) => (
                   <div key={index} className="text-center">
-                    <div className="bg-red-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                      <benefit.icon className="h-8 w-8 text-red-600" />
+                    <div className="bg-primary-50 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                      <benefit.icon className="h-8 w-8 text-primary-600" />
                     </div>
                     <h5 className="text-lg font-bold text-gray-900 mb-2">{benefit.title}</h5>
                     <p className="text-gray-600">{benefit.description}</p>
@@ -1180,21 +1244,24 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* Impact Stats */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="section-spacing bg-white">
+        <div className="content-width">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-8">
               Real Families, Real Savings
             </h2>
-            <p className="text-2xl text-gray-600">
+            <p className="text-2xl text-gray-600 text-width">
               Every number represents a family that didn't have to choose between health and money
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="bg-gray-50 rounded-3xl p-8 text-center shadow-lg hover:shadow-xl transition-shadow">
-                <div className="text-5xl font-bold text-red-600 mb-4">{stat.number}</div>
+                <div className="text-5xl font-bold text-primary-600 mb-4">{stat.number}</div>
                 <div className="text-xl font-semibold text-gray-900 mb-2">{stat.label}</div>
                 <div className="text-gray-600">{stat.description}</div>
               </div>
@@ -1203,12 +1270,15 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* About Section */}
-      <section id="about" className="py-24 bg-red-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="about" className="section-spacing" style={{ backgroundColor: 'var(--color-primary)' }}>
+        <div className="content-width">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold mb-8">Our Mission is Simple</h2>
-            <p className="text-2xl text-red-100 max-w-4xl mx-auto">
+            <p className="text-2xl text-white/90 text-width">
               No family should face financial ruin because they couldn't find affordable healthcare options
             </p>
           </div>
@@ -1216,10 +1286,10 @@ const Home = () => {
             <div className="text-center">
               <div className="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-6">
-                  <Target className="h-10 w-10 text-red-600" />
+                  <Target className="h-10 w-10 text-primary-600" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">What We Do</h3>
-                <p className="text-red-100 text-lg">
+                <p className="text-white/90 text-lg">
                   We use AI to read prescriptions and instantly find families better hospital rates, 
                   saving them thousands of rupees on quality healthcare.
                 </p>
@@ -1228,10 +1298,10 @@ const Home = () => {
             <div className="text-center">
               <div className="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-6">
-                  <Eye className="h-10 w-10 text-red-600" />
+                  <Eye className="h-10 w-10 text-primary-600" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
-                <p className="text-red-100 text-lg">
+                <p className="text-white/90 text-lg">
                   An India where every family can access quality healthcare without fear of bankruptcy, 
                   where prices are transparent and options are clear.
                 </p>
@@ -1240,10 +1310,10 @@ const Home = () => {
             <div className="text-center">
               <div className="bg-white/10 rounded-2xl p-8 backdrop-blur-sm">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-6">
-                  <Award className="h-10 w-10 text-red-600" />
+                  <Award className="h-10 w-10 text-primary-600" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Our Promise</h3>
-                <p className="text-red-100 text-lg">
+                <p className="text-white/90 text-lg">
                   We will always provide our basic service free to families in need, 
                   because healthcare guidance should never be a luxury.
                 </p>
@@ -1253,21 +1323,24 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* Values */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="section-spacing bg-white">
+        <div className="content-width">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">How We Work</h2>
-            <p className="text-2xl text-gray-600">
+            <p className="text-2xl text-gray-600 text-width">
               Every decision we make is guided by our commitment to families
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {values.map((value, index) => (
-              <div key={index} className="bg-red-50 rounded-3xl p-12 hover:shadow-lg transition-shadow duration-300">
+              <div key={index} className="bg-primary-50 rounded-3xl p-12 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-start space-x-6">
                   <div className="flex-shrink-0">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-red-600 rounded-2xl">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-primary-600 rounded-2xl">
                       <value.icon className="h-8 w-8 text-white" />
                     </div>
                   </div>
@@ -1282,26 +1355,29 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* How We Help Your Family - Short, Horizontal, Dual Option */}
-      <section id="services" className="py-16 bg-gray-50">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="services" className="section-spacing-sm bg-gray-50">
+        <div className="content-width">
           <div className="text-center mb-10">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">How We Help Your Family</h2>
-            <p className="text-xl text-gray-600">Simple, fast, and always focused on saving you money</p>
+            <p className="text-xl text-gray-600 text-width">Simple, fast, and always focused on saving you money</p>
           </div>
           <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
             <div className="flex-1 bg-white rounded-2xl p-8 shadow-md flex flex-col items-center">
-              <Camera className="h-10 w-10 text-red-600 mb-4" />
+              <Camera className="h-10 w-10 text-primary-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Upload Prescription</h3>
               <p className="text-gray-600 mb-4 text-center">Snap a photo or upload your doctor's prescription. Our AI reads it instantly and finds you better hospital rates.</p>
             </div>
             <div className="flex-1 bg-white rounded-2xl p-8 shadow-md flex flex-col items-center">
-              <FormInput className="h-10 w-10 text-red-600 mb-4" />
+              <FormInput className="h-10 w-10 text-primary-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Fill Details</h3>
               <p className="text-gray-600 mb-4 text-center">No prescription? Just fill in your procedure details and we'll do the rest—get instant hospital options and savings.</p>
             </div>
             <div className="flex-1 bg-white rounded-2xl p-8 shadow-md flex flex-col items-center">
-              <CheckCircle className="h-10 w-10 text-green-600 mb-4" />
+              <CheckCircle className="h-10 w-10 text-success-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Get Results</h3>
               <p className="text-gray-600 mb-4 text-center">Receive verified hospital options with negotiated rates—see exactly how much you can save, instantly.</p>
             </div>
@@ -1309,24 +1385,27 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* Team Section */}
-      <section id="team" className="py-20 bg-gradient-to-br from-red-50 via-white to-blue-50 relative overflow-hidden">
+      <section id="team" className="section-spacing-sm bg-gradient-to-br from-primary-50 via-white to-secondary-50 relative overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-r from-red-500/5 to-blue-500/5"></div>
-        <div className="absolute top-10 left-10 w-20 h-20 bg-red-100 rounded-full opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-10 right-10 w-32 h-32 bg-blue-100 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-500/5 to-secondary-500/5"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-primary-100 rounded-full opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-10 right-10 w-32 h-32 bg-secondary-100 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '1s' }}></div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="content-width relative">
           {/* Header with Urgency */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
+            <div className="inline-flex items-center bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
               <Clock className="w-4 h-4 mr-2" />
               Available 24/7 for Emergency Consultations
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-600 to-blue-600 bg-clip-text text-transparent mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent mb-6">
               Expert Medical Team
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-700 text-width leading-relaxed">
               Board-certified specialists ready to provide immediate guidance for your healthcare needs
             </p>
           </div>
@@ -1336,7 +1415,7 @@ const Home = () => {
             {leadership.map((member, index) => (
               <div key={index} className="group relative">
                 {/* Card */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-red-200 hover:-translate-y-2">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-primary-200 hover:-translate-y-2">
                   {/* Status Badge */}
                   <div className="absolute -top-3 -right-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
                     Available
@@ -1350,16 +1429,16 @@ const Home = () => {
                         alt={member.name}
                         className="w-full h-full rounded-full object-cover object-center border-4 border-white shadow-lg group-hover:scale-105 transition-transform duration-300"
                       />
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-red-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-500/20 to-secondary-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                   </div>
                   
                   {/* Doctor Info */}
                   <div className="text-center">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-red-600 transition-colors duration-300">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors duration-300">
                       {member.name}
                     </h3>
-                    <div className="inline-flex items-center bg-gradient-to-r from-red-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                    <div className="inline-flex items-center bg-gradient-to-r from-primary-500 to-secondary-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
                       {member.role}
                     </div>
                     <p className="text-gray-600 text-sm leading-relaxed">
@@ -1374,26 +1453,27 @@ const Home = () => {
         </div>
       </section>
 
-
+      {/* Section Divider */}
+      <div className="section-divider"></div>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gradient-to-br from-blue-50 via-white to-red-50 relative overflow-hidden">
+      <section id="contact" className="section-spacing-sm bg-gradient-to-br from-secondary-50 via-white to-primary-50 relative overflow-hidden">
         {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-red-500/5"></div>
-        <div className="absolute top-20 right-20 w-24 h-24 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>
-        <div className="absolute bottom-20 left-20 w-28 h-28 bg-red-100 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary-500/5 to-primary-500/5"></div>
+        <div className="absolute top-20 right-20 w-24 h-24 bg-secondary-100 rounded-full opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-20 left-20 w-28 h-28 bg-primary-100 rounded-full opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <div className="content-width relative">
           {/* Header with Urgency */}
           <div className="text-center mb-16">
-            <div className="inline-flex items-center bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
+            <div className="inline-flex items-center bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-6 animate-pulse">
               <Phone className="w-4 h-4 mr-2" />
               Immediate Response Guaranteed
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-red-600 bg-clip-text text-transparent mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-secondary-600 to-primary-600 bg-clip-text text-transparent mb-6">
               Get Help Now
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-700 text-width leading-relaxed">
               Our medical experts are standing by to provide immediate guidance for your healthcare needs
             </p>
           </div>
@@ -1401,45 +1481,45 @@ const Home = () => {
           {/* Quick Contact Options */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
             {/* Emergency Contact */}
-            <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+            <div className="bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
               <div className="flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 mx-auto">
                 <Phone className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold text-center mb-4">Emergency</h3>
-              <p className="text-center text-red-100 mb-6">24/7 Urgent Medical Support</p>
+              <p className="text-center text-white/90 mb-6">24/7 Urgent Medical Support</p>
               <a
                 href="tel:+919029466003"
-                className="block w-full bg-white text-red-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
+                className="block w-full bg-white text-primary-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
               >
                 Call Now
               </a>
             </div>
 
             {/* General Support */}
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+            <div className="bg-gradient-to-br from-secondary-500 to-secondary-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
               <div className="flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 mx-auto">
                 <Mail className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold text-center mb-4">General</h3>
-              <p className="text-center text-blue-100 mb-6">Questions & Information</p>
+              <p className="text-center text-white/90 mb-6">Questions & Information</p>
               <a
                 href="mailto:hospeezy1@outlook.com"
-                className="block w-full bg-white text-blue-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
+                className="block w-full bg-white text-secondary-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
               >
                 Email Us
               </a>
             </div>
 
             {/* Location */}
-            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+            <div className="bg-gradient-to-br from-success-500 to-success-600 rounded-2xl p-8 text-white shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
               <div className="flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 mx-auto">
                 <MapPin className="h-8 w-8" />
               </div>
               <h3 className="text-2xl font-bold text-center mb-4">Location</h3>
-              <p className="text-center text-green-100 mb-6">Mumbai MMR Region</p>
+              <p className="text-center text-white/90 mb-6">Mumbai MMR Region</p>
               <a
                 href="https://share.google/Yfa8Ft8IO5GWsRXAp"
-                className="block w-full bg-white text-green-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
+                className="block w-full bg-white text-success-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
               >
                 Find Us
               </a>
@@ -1465,7 +1545,7 @@ const Home = () => {
                     value={contactData.name}
                     onChange={handleContactChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                    className="form-input w-full"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -1479,7 +1559,7 @@ const Home = () => {
                     value={contactData.email}
                     onChange={handleContactChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                    className="form-input w-full"
                     placeholder="Enter your email"
                   />
                 </div>
@@ -1495,7 +1575,7 @@ const Home = () => {
                     name="phone"
                     value={contactData.phone}
                     onChange={handleContactChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                    className="form-input w-full"
                     placeholder="Enter your phone number"
                   />
                 </div>
@@ -1507,7 +1587,7 @@ const Home = () => {
                     name="urgency"
                     value={contactData.urgency}
                     onChange={handleContactChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all duration-300"
+                    className="form-input w-full"
                   >
                     <option value="normal">Normal</option>
                     <option value="urgent">Urgent</option>
@@ -1549,7 +1629,7 @@ const Home = () => {
               <button
                 type="submit"
                 disabled={contactSubmitting}
-                className="w-full bg-gradient-to-r from-red-500 to-blue-500 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-red-600 hover:to-blue-600 focus:ring-4 focus:ring-red-200 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-lg hover:shadow-xl"
+                className="btn-primary w-full py-4 px-6 text-lg flex items-center justify-center shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {contactSubmitting ? (
                   <>
@@ -1601,25 +1681,28 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider"></div>
+
       {/* Final CTA */}
-      <section className="py-24 bg-red-600 text-white">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-4xl lg:text-6xl font-bold mb-8">
+      <section className="section-spacing" style={{ backgroundColor: 'var(--color-primary)' }}>
+        <div className="content-width text-center">
+          <h2 className="text-4xl lg:text-6xl font-bold mb-8 text-white">
             Your Family Deserves Better Healthcare Prices
           </h2>
-          <p className="text-2xl text-red-100 mb-12 max-w-4xl mx-auto">
+          <p className="text-2xl text-white/90 mb-12 text-width">
             Don't let confusing hospital bills and hidden costs stress your family. 
             Fill in your procedure details now and see how much you can save.
           </p>
           <div className="flex flex-col lg:flex-row gap-6 justify-center items-center">
             <button
               onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-red-600 px-12 py-6 rounded-2xl font-bold text-2xl hover:bg-gray-100 transition-all duration-300 shadow-lg flex items-center space-x-4"
+              className="bg-white text-primary-600 px-12 py-6 rounded-2xl font-bold text-2xl hover:bg-gray-100 transition-all duration-300 shadow-lg flex items-center space-x-4"
             >
               <FormInput className="h-8 w-8" />
               <span>Fill Details Now</span>
             </button>
-            <div className="text-red-100 text-lg">
+            <div className="text-white/90 text-lg">
               ✓ No registration required ✓ Instant results ✓ Always free
             </div>
           </div>
@@ -1782,7 +1865,7 @@ const Home = () => {
           </div>
         );
       })()}
-    </div>
+    </main>
   );
 };
 

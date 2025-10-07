@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Calculator, FileText, Phone, Users, Shield, Heart, TrendingUp } from 'lucide-react';
+import { Search, Calculator, FileText, Phone, Users, Shield, Heart } from 'lucide-react';
 
 const Services = () => {
   const services = [
