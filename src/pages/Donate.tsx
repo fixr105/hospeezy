@@ -35,13 +35,13 @@ const Donate = () => {
     {
       name: 'Ravi Kumar',
       amount: '₹2,000',
-      quote: 'SANDEH helped my family save ₹80,000 on surgery. Happy to support their mission.',
+      quote: 'HOSPEEZY helped my family save ₹80,000 on surgery. Happy to support their mission.',
       image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200',
     },
     {
       name: 'Dr. Priya Sharma',
       amount: '₹5,000',
-      quote: 'As a doctor, I see the need for transparent healthcare costs. SANDEH is doing crucial work.',
+      quote: 'As a doctor, I see the need for transparent healthcare costs. HOSPEEZY is doing crucial work.',
       image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=200',
     },
     {

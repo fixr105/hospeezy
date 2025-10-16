@@ -355,7 +355,7 @@ const Tools = () => {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
-              Why Families Trust SANDEH
+              Why Families Trust HOSPEEZY
             </h2>
             <p className="text-xl text-gray-600">
               We're not just finding you cheaper options - we're ensuring you get quality care at fair prices

@@ -60,8 +60,8 @@ const Blog = () => {
       category: 'Technology',
     },
     {
-      title: 'Success Story: How SANDEH Helped Save ₹2 Lakhs',
-      excerpt: 'A real patient story about finding quality cardiac care at an affordable price through SANDEH.',
+      title: 'Success Story: How HOSPEEZY Helped Save ₹2 Lakhs',
+      excerpt: 'A real patient story about finding quality cardiac care at an affordable price through HOSPEEZY.',
       image: 'https://images.pexels.com/photos/668300/pexels-photo-668300.jpeg?auto=compress&cs=tinysrgb&w=400',
       author: 'Anjali Reddy',
       date: '2024-01-01',
@@ -82,7 +82,7 @@ const Blog = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="bg-white py-20 border-b border-gray-200">
+      <section className="py-20 border-b border-gray-200" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -125,7 +125,11 @@ const Blog = () => {
                     <span className="text-sm">{featuredPost.readTime}</span>
                   </div>
                 </div>
-                <button className="bg-white text-red-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors flex items-center space-x-2">
+                <button className="text-red-600 px-6 py-3 rounded-md font-semibold transition-colors flex items-center space-x-2"
+                  style={{ backgroundColor: '#efe5d2' }}
+                  onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
+                  onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
+                >
                   <span>Read Full Article</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
@@ -143,7 +147,7 @@ const Blog = () => {
       </section>
 
       {/* Blog Posts and Sidebar */}
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Blog Posts */}
@@ -226,7 +230,7 @@ const Blog = () => {
               <div className="bg-red-600 text-white rounded-lg p-6 shadow-md">
                 <h3 className="text-lg font-bold mb-4">Stay Updated</h3>
                 <p className="text-red-100 mb-4">
-                  Get the latest healthcare tips and SANDEH updates delivered to your inbox.
+                  Get the latest healthcare tips and HOSPEEZY updates delivered to your inbox.
                 </p>
                 <div className="space-y-3">
                   <input

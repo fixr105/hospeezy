@@ -26,8 +26,8 @@
   --color-secondary-200: #bfdbfe;
 
   /* Neutral Colors */
-  --color-neutral-50: #f9fafb;
-  --color-neutral-100: #f3f4f6;
+  --color-neutral-50: #efe5d2;
+  --color-neutral-100: #efe5d2;
   --color-neutral-200: #e5e7eb;
   --color-neutral-300: #d1d5db;
   --color-neutral-400: #9ca3af;
@@ -36,6 +36,9 @@
   --color-neutral-700: #374151;
   --color-neutral-800: #1f2937;
   --color-neutral-900: #111827;
+  
+  /* Custom Cream Color */
+  --color-cream: #efe5d2;
 
   /* Success Colors */
   --color-success: #059669;
@@ -197,7 +200,7 @@
   padding: var(--spacing-md);
   font-size: var(--font-size-base);
   transition: all var(--transition-normal);
-  background-color: white;
+  background-color: var(--color-cream);
 }
 
 .form-input:focus {
@@ -212,7 +215,7 @@
 
 /* Card Components */
 .card {
-  background-color: white;
+  background-color: var(--color-cream);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-2xl);
   box-shadow: var(--shadow-lg);

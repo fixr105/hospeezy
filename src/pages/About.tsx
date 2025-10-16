@@ -35,15 +35,15 @@ const About = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="bg-white py-20 border-b border-gray-200">
+      <section className="py-20 border-b border-gray-200" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
-              Our Story: Why SANDEH Exists
+              Our Story: Why HOSPEEZY Exists
             </h1>
             <p className="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
               Every family deserves access to quality healthcare without going into debt. 
-              We started SANDEH because we believe no parent should have to choose between 
+              We started HOSPEEZY because we believe no parent should have to choose between 
               their child's health and their family's financial future.
             </p>
           </div>
@@ -131,7 +131,7 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-24 bg-white">
+      <section className="py-24" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">How We Work</h2>
@@ -173,7 +173,7 @@ const About = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {achievements.map((achievement, index) => (
-              <div key={index} className="text-center bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow">
+              <div key={index} className="text-center rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow" style={{ backgroundColor: '#efe5d2' }}>
                 <div className="text-5xl font-bold text-red-600 mb-4">{achievement.number}</div>
                 <div className="text-2xl font-bold text-gray-900 mb-2">{achievement.label}</div>
                 <div className="text-gray-600 text-lg">{achievement.description}</div>
@@ -184,7 +184,7 @@ const About = () => {
       </section>
 
       {/* How We Work */}
-      <section className="py-24 bg-white">
+      <section className="py-24" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">How We Help Your Family</h2>
@@ -207,7 +207,7 @@ const About = () => {
                     Our AI reads it instantly and understands exactly what treatment you need.
                   </p>
                 </div>
-                <div className="bg-white rounded-2xl p-8 shadow-lg">
+                <div className="rounded-2xl p-8 shadow-lg" style={{ backgroundColor: '#efe5d2' }}>
                   <img
                     src="https://images.pexels.com/photos/4386464/pexels-photo-4386464.jpeg?auto=compress&cs=tinysrgb&w=600"
                     alt="Upload prescription"
@@ -255,7 +255,7 @@ const About = () => {
                     through the entire healthcare journey. You're never alone.
                   </p>
                 </div>
-                <div className="bg-white rounded-2xl p-8 shadow-lg">
+                <div className="rounded-2xl p-8 shadow-lg" style={{ backgroundColor: '#efe5d2' }}>
                   <img
                     src="https://images.pexels.com/photos/4386465/pexels-photo-4386465.jpeg?auto=compress&cs=tinysrgb&w=600"
                     alt="Ongoing support"
@@ -281,7 +281,10 @@ const About = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/tools"
-              className="bg-white text-red-600 px-12 py-6 rounded-2xl font-bold text-2xl hover:bg-gray-100 transition-all duration-300"
+              className="text-red-600 px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-300"
+              style={{ backgroundColor: '#efe5d2' }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
             >
               Upload Your Prescription
             </a>

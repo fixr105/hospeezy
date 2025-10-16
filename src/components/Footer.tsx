@@ -4,7 +4,7 @@ import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } fr
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white">
+    <footer className="text-white" style={{ backgroundColor: '#374151' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Mission */}
@@ -13,7 +13,7 @@ const Footer = () => {
               <div className="bg-red-600 p-3 rounded-lg">
                 <Heart className="h-8 w-8 text-white" />
               </div>
-              <span className="text-3xl font-bold">SANDEH</span>
+              <span className="text-3xl font-bold">HOSPEEZY</span>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               No family should choose between health and money. We help families across India 
@@ -77,7 +77,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-red-400" />
-                <span className="text-gray-300 text-lg">help@sandeh.org</span>
+                <span className="text-gray-300 text-lg">help@hospeezy.org</span>
               </div>
               <div className="flex items-center space-x-3">
                 <MapPin className="h-5 w-5 text-red-400" />
@@ -89,7 +89,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2024 SANDEH - Helping families access affordable healthcare. All rights reserved.
+            © 2024 HOSPEEZY - Helping families access affordable healthcare. All rights reserved.
           </p>
         </div>
       </div>

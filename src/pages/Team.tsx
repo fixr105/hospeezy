@@ -7,7 +7,7 @@ const Team = () => {
       name: 'Dr. Rajesh Sharma',
       role: 'Founder & CEO',
       image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
-      bio: 'A cardiologist with 15+ years of experience, Dr. Sharma founded SANDEH after witnessing the financial struggles of his patients. He holds an MD from AIIMS and MBA from IIM Bangalore.',
+      bio: 'A cardiologist with 15+ years of experience, Dr. Sharma founded HOSPEEZY after witnessing the financial struggles of his patients. He holds an MD from AIIMS and MBA from IIM Bangalore.',
       expertise: ['Healthcare Administration', 'Cardiac Surgery', 'Healthcare Policy'],
       social: {
         linkedin: '#',
@@ -113,7 +113,7 @@ const Team = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="bg-white py-20 border-b border-gray-200">
+      <section className="py-20 border-b border-gray-200" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -128,7 +128,7 @@ const Team = () => {
       </section>
 
       {/* Team Stats */}
-      <section className="py-16 bg-white">
+      <section className="py-16" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -154,7 +154,7 @@ const Team = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {leadership.map((member, index) => (
-              <div key={index} className="bg-white rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200">
+              <div key={index} className="rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow duration-300 border border-gray-200" style={{ backgroundColor: '#efe5d2' }}>
                 <div className="flex items-start space-x-6">
                   <img
                     src={member.image}
@@ -197,7 +197,7 @@ const Team = () => {
       </section>
 
       {/* Advisory Board */}
-      <section className="py-20 bg-white">
+      <section className="py-20" style={{ backgroundColor: '#efe5d2' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">

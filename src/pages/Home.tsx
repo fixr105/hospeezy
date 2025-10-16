@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, Heart, Shield, Users, ArrowRight, CheckCircle, Camera, FileText, FormInput, Send, Phone, Mail, MapPin, Clock, Award, TrendingUp, Eye, Target } from 'lucide-react';
-import logo from "../logo.webp";
+import logo from "../logo.png";
 import drRohit from "../components/Dr rohit.jpg";
 import drSwapnil from "../components/Dr swapnil.jpg";
 import drManeesh from "../components/Dr maneesh.JPG";
@@ -345,7 +345,7 @@ const Home = () => {
       <header 
         id="hero" 
         className="section-spacing text-center relative overflow-hidden min-h-screen flex items-center cursor-pointer hover:bg-opacity-95 transition-all duration-300" 
-        style={{ background: 'linear-gradient(135deg, var(--color-primary-50) 0%, #fff 50%, var(--color-secondary-50) 100%)' }}
+        style={{ background: 'linear-gradient(135deg, var(--color-primary-50) 0%, #efe5d2 50%, var(--color-secondary-50) 100%)' }}
         onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
         role="banner"
         aria-label="Hero section - Click to get started"
@@ -396,11 +396,13 @@ const Home = () => {
           <div className="flex justify-center mb-6 sm:mb-10 px-4 sm:px-0">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-primary-200 to-secondary-200 rounded-full blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
-              <img 
-                src={logo} 
-                alt="SANDEH NGO Logo" 
-                className="relative h-48 sm:h-60 lg:h-72 w-auto object-contain drop-shadow-2xl hover:scale-110 transition-all duration-700 transform hover:rotate-1" 
-              />
+              <div className="relative h-48 sm:h-60 lg:h-72 w-64 sm:w-80 lg:w-96 rounded-full overflow-hidden drop-shadow-2xl hover:scale-110 transition-all duration-700 transform hover:rotate-1 bg-white">
+                <img 
+                  src={logo} 
+                  alt="HOSPEEZY Logo" 
+                  className="h-full w-full object-contain p-4" 
+                />
+              </div>
             </div>
           </div>
           
@@ -412,7 +414,7 @@ const Home = () => {
                 className="relative text-white px-8 sm:px-16 lg:px-20 py-6 sm:py-8 lg:py-10 rounded-full font-bold text-xl sm:text-2xl lg:text-4xl shadow-2xl hover:shadow-3xl transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 border-2 border-primary-400"
                 style={{ backgroundColor: 'var(--color-primary)' }}
               >
-                आपका संदेह हम दूर करेंगे
+                Your Healthcare Savings Partner
               </div>
             </div>
           </div>
@@ -427,7 +429,7 @@ const Home = () => {
             
             {/* Animated subtitle */}
             <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 text-width leading-relaxed px-4 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-              SANDEH helps families access quality healthcare without financial stress. 
+              HOSPEEZY helps families access quality healthcare without financial stress. 
               <span className="font-semibold text-primary-600"> Choose your path to better healthcare rates.</span>
             </p>
           </div>
@@ -905,7 +907,7 @@ const Home = () => {
                 <div className="space-y-4">
                   <p className="text-gray-700 font-semibold">Want to connect with Dr. Manish directly?</p>
                   <a
-                    href="https://wa.me/919029466003?text=Hi%20Dr.%20Manish,%20i%20have%20shared%20my%20details%20on%20the%20website%20sandehindia.org,%20looking%20forward%20to%20your%20kind%20advise"
+                    href="https://wa.me/919029466003?text=Hi%20Dr.%20Manish,%20i%20have%20shared%20my%20details%20on%20the%20website%20hospeezy.org,%20looking%20forward%20to%20your%20kind%20advise"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center bg-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-700 transition-all duration-300 shadow-lg transform hover:scale-105"
@@ -1366,17 +1368,17 @@ const Home = () => {
             <p className="text-xl text-gray-600 text-width">Simple, fast, and always focused on saving you money</p>
           </div>
           <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
-            <div className="flex-1 bg-white rounded-2xl p-8 shadow-md flex flex-col items-center">
+            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: '#efe5d2' }}>
               <Camera className="h-10 w-10 text-primary-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Upload Prescription</h3>
               <p className="text-gray-600 mb-4 text-center">Snap a photo or upload your doctor's prescription. Our AI reads it instantly and finds you better hospital rates.</p>
             </div>
-            <div className="flex-1 bg-white rounded-2xl p-8 shadow-md flex flex-col items-center">
+            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: '#efe5d2' }}>
               <FormInput className="h-10 w-10 text-primary-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Fill Details</h3>
               <p className="text-gray-600 mb-4 text-center">No prescription? Just fill in your procedure details and we'll do the rest—get instant hospital options and savings.</p>
             </div>
-            <div className="flex-1 bg-white rounded-2xl p-8 shadow-md flex flex-col items-center">
+            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: '#efe5d2' }}>
               <CheckCircle className="h-10 w-10 text-success-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Get Results</h3>
               <p className="text-gray-600 mb-4 text-center">Receive verified hospital options with negotiated rates—see exactly how much you can save, instantly.</p>
@@ -1415,7 +1417,7 @@ const Home = () => {
             {leadership.map((member, index) => (
               <div key={index} className="group relative">
                 {/* Card */}
-                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-primary-200 hover:-translate-y-2">
+                <div className="backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-primary-200 hover:-translate-y-2" style={{ backgroundColor: 'rgba(239, 229, 210, 0.8)' }}>
                   {/* Status Badge */}
                   <div className="absolute -top-3 -right-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
                     Available
@@ -1489,7 +1491,10 @@ const Home = () => {
               <p className="text-center text-white/90 mb-6">24/7 Urgent Medical Support</p>
               <a
                 href="tel:+919029466003"
-                className="block w-full bg-white text-primary-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
+                className="block w-full text-primary-600 py-4 px-6 rounded-xl font-bold text-center transition-colors duration-300"
+                style={{ backgroundColor: '#efe5d2' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
               >
                 Call Now
               </a>
@@ -1504,7 +1509,10 @@ const Home = () => {
               <p className="text-center text-white/90 mb-6">Questions & Information</p>
               <a
                 href="mailto:hospeezy1@outlook.com"
-                className="block w-full bg-white text-secondary-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
+                className="block w-full text-secondary-600 py-4 px-6 rounded-xl font-bold text-center transition-colors duration-300"
+                style={{ backgroundColor: '#efe5d2' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
               >
                 Email Us
               </a>
@@ -1519,7 +1527,10 @@ const Home = () => {
               <p className="text-center text-white/90 mb-6">Mumbai MMR Region</p>
               <a
                 href="https://share.google/Yfa8Ft8IO5GWsRXAp"
-                className="block w-full bg-white text-success-600 py-4 px-6 rounded-xl font-bold text-center hover:bg-gray-100 transition-colors duration-300"
+                className="block w-full text-success-600 py-4 px-6 rounded-xl font-bold text-center transition-colors duration-300"
+                style={{ backgroundColor: '#efe5d2' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
               >
                 Find Us
               </a>
@@ -1527,7 +1538,7 @@ const Home = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50">
+          <div className="backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50" style={{ backgroundColor: 'rgba(239, 229, 210, 0.8)' }}>
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold text-gray-900 mb-4">Send us a Message</h3>
               <p className="text-gray-600">Get personalized medical guidance from our expert team</p>
@@ -1697,7 +1708,10 @@ const Home = () => {
           <div className="flex flex-col lg:flex-row gap-6 justify-center items-center">
             <button
               onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
-              className="bg-white text-primary-600 px-12 py-6 rounded-2xl font-bold text-2xl hover:bg-gray-100 transition-all duration-300 shadow-lg flex items-center space-x-4"
+              className="text-primary-600 px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-300 shadow-lg flex items-center space-x-4"
+              style={{ backgroundColor: '#efe5d2' }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
             >
               <FormInput className="h-8 w-8" />
               <span>Fill Details Now</span>
@@ -1718,7 +1732,7 @@ const Home = () => {
         const procedure = hospitalResult.hospital.procedure || '—';
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-lg w-full relative">
+            <div className="rounded-3xl shadow-2xl p-8 max-w-lg w-full relative" style={{ backgroundColor: '#efe5d2' }}>
               <button
                 onClick={() => setModalStep(null)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold"
@@ -1835,7 +1849,7 @@ const Home = () => {
                   </button>
                   <div className="flex gap-4 mt-2">
                     <a
-                      href={`https://twitter.com/intent/tweet?text=I%20just%20saved%20money%20on%20my%20hospital%20bill%20with%20SANDEH!%20Check%20it%20out%20at%20https://sandeh.org`}
+                      href={`https://twitter.com/intent/tweet?text=I%20just%20saved%20money%20on%20my%20hospital%20bill%20with%20HOSPEEZY!%20Check%20it%20out%20at%20https://hospeezy.org`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-500 hover:underline"
@@ -1843,7 +1857,7 @@ const Home = () => {
                       Share on Twitter
                     </a>
                     <a
-                      href={`https://www.facebook.com/sharer/sharer.php?u=https://sandeh.org`}
+                      href={`https://www.facebook.com/sharer/sharer.php?u=https://hospeezy.org`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-700 hover:underline"
@@ -1851,7 +1865,7 @@ const Home = () => {
                       Share on Facebook
                     </a>
                     <a
-                      href={`https://wa.me/?text=I%20just%20saved%20money%20on%20my%20hospital%20bill%20with%20SANDEH!%20Check%20it%20out%20at%20https://sandeh.org`}
+                      href={`https://wa.me/?text=I%20just%20saved%20money%20on%20my%20hospital%20bill%20with%20HOSPEEZY!%20Check%20it%20out%20at%20https://hospeezy.org`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-green-600 hover:underline"

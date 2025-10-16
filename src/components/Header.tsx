@@ -22,7 +22,7 @@ const Header = () => {
   ];
 
   return (
-    <header className="bg-white shadow-lg sticky top-0 z-50 border-b-2 border-red-600">
+    <header className="shadow-lg sticky top-0 z-50 border-b-2 border-red-600" style={{ backgroundColor: '#efe5d2' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -33,7 +33,7 @@ const Header = () => {
             <div className="bg-red-600 p-2 rounded-sm">
               <Heart className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-gray-900">SANDEH</span>
+            <span className="text-2xl font-bold text-gray-900">HOSPEEZY</span>
           </button>
 
           {/* Desktop Navigation */}
@@ -72,7 +72,7 @@ const Header = () => {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
+        <div className="md:hidden border-t border-gray-200" style={{ backgroundColor: '#efe5d2' }}>
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navigation.map((item) => (
               <button
