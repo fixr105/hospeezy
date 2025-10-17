@@ -35,7 +35,7 @@ const About = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="py-20 border-b border-gray-200" style={{ backgroundColor: '#efe5d2' }}>
+      <section className="py-20 border-b border-gray-200" style={{ backgroundColor: 'var(--color-cream-light)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">
@@ -131,7 +131,7 @@ const About = () => {
       </section>
 
       {/* Values */}
-      <section className="py-24" style={{ backgroundColor: '#efe5d2' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--color-cream-light)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">How We Work</h2>
@@ -173,7 +173,7 @@ const About = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {achievements.map((achievement, index) => (
-              <div key={index} className="text-center rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow" style={{ backgroundColor: '#efe5d2' }}>
+              <div key={index} className="text-center rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow" style={{ backgroundColor: 'var(--color-cream-medium)' }}>
                 <div className="text-5xl font-bold text-red-600 mb-4">{achievement.number}</div>
                 <div className="text-2xl font-bold text-gray-900 mb-2">{achievement.label}</div>
                 <div className="text-gray-600 text-lg">{achievement.description}</div>
@@ -184,7 +184,7 @@ const About = () => {
       </section>
 
       {/* How We Work */}
-      <section className="py-24" style={{ backgroundColor: '#efe5d2' }}>
+      <section className="py-24" style={{ backgroundColor: 'var(--color-cream-light)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8">How We Help Your Family</h2>
@@ -282,9 +282,9 @@ const About = () => {
             <a
               href="/tools"
               className="text-red-600 px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-300"
-              style={{ backgroundColor: '#efe5d2' }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
+              style={{ backgroundColor: 'var(--color-white-pure)' }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-white-warm)'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--color-white-pure)'}
             >
               Upload Your Prescription
             </a>

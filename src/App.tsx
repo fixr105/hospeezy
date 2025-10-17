@@ -3,7 +3,7 @@ import Home from './pages/Home';
 
 function App() {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#efe5d2' }}>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-cream-light)' }}>
       <main>
         <Home />
       </main>

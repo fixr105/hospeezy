@@ -25,20 +25,29 @@
   --color-secondary-100: #dbeafe;
   --color-secondary-200: #bfdbfe;
 
+  /* Enhanced Cream & White Palette */
+  --color-cream-light: #f8f5f0;    /* Very light cream - backgrounds */
+  --color-cream: #f0ead6;          /* Primary cream - main backgrounds */
+  --color-cream-medium: #e8dcc6;   /* Medium cream - cards, containers */
+  --color-cream-dark: #ddd0b8;     /* Darker cream - hover states */
+  --color-cream-accent: #f4f0e8;   /* Accent cream - subtle highlights */
+  
+  /* Pure Whites */
+  --color-white-pure: #ffffff;     /* Pure white - logos, text areas */
+  --color-white-soft: #fefefe;     /* Soft white - subtle backgrounds */
+  --color-white-warm: #faf9f7;     /* Warm white - gentle backgrounds */
+  
   /* Neutral Colors */
-  --color-neutral-50: #efe5d2;
-  --color-neutral-100: #efe5d2;
-  --color-neutral-200: #e5e7eb;
-  --color-neutral-300: #d1d5db;
+  --color-neutral-50: #f8f5f0;
+  --color-neutral-100: #f0ead6;
+  --color-neutral-200: #e8dcc6;
+  --color-neutral-300: #ddd0b8;
   --color-neutral-400: #9ca3af;
   --color-neutral-500: #6b7280;
   --color-neutral-600: #4b5563;
   --color-neutral-700: #374151;
   --color-neutral-800: #1f2937;
   --color-neutral-900: #111827;
-  
-  /* Custom Cream Color */
-  --color-cream: #efe5d2;
 
   /* Success Colors */
   --color-success: #059669;
@@ -195,18 +204,19 @@
 
 /* Form Elements */
 .form-input {
-  border: 2px solid var(--color-neutral-300);
+  border: 2px solid var(--color-cream-dark);
   border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   font-size: var(--font-size-base);
   transition: all var(--transition-normal);
-  background-color: var(--color-cream);
+  background-color: var(--color-white-warm);
 }
 
 .form-input:focus {
   border-color: var(--color-primary);
   outline: none;
   box-shadow: 0 0 0 3px var(--color-primary-100);
+  background-color: var(--color-white-pure);
 }
 
 .form-input:invalid {
@@ -215,7 +225,8 @@
 
 /* Card Components */
 .card {
-  background-color: var(--color-cream);
+  background-color: var(--color-cream-medium);
+  border: 1px solid var(--color-cream-dark);
   border-radius: var(--radius-2xl);
   padding: var(--spacing-2xl);
   box-shadow: var(--shadow-lg);
@@ -223,6 +234,8 @@
 }
 
 .card:hover {
+  background-color: var(--color-cream-accent);
+  border-color: var(--color-cream-dark);
   box-shadow: var(--shadow-xl);
   transform: translateY(-2px);
 }

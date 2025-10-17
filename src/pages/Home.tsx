@@ -345,7 +345,7 @@ const Home = () => {
       <header 
         id="hero" 
         className="section-spacing text-center relative overflow-hidden min-h-screen flex items-center cursor-pointer hover:bg-opacity-95 transition-all duration-300" 
-        style={{ background: 'linear-gradient(135deg, var(--color-primary-50) 0%, #efe5d2 50%, var(--color-secondary-50) 100%)' }}
+        style={{ background: 'linear-gradient(135deg, var(--color-primary-50) 0%, var(--color-cream-light) 50%, var(--color-secondary-50) 100%)' }}
         onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
         role="banner"
         aria-label="Hero section - Click to get started"
@@ -1279,7 +1279,7 @@ const Home = () => {
       <section id="about" className="section-spacing" style={{ backgroundColor: 'var(--color-primary)' }}>
         <div className="content-width">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-6xl font-bold mb-8">Our Mission is Simple</h2>
+            <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">Our Mission is Simple</h2>
             <p className="text-2xl text-white/90 text-width">
               No family should face financial ruin because they couldn't find affordable healthcare options
             </p>
@@ -1290,7 +1290,7 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-6">
                   <Target className="h-10 w-10 text-primary-600" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">What We Do</h3>
+                <h3 className="text-2xl font-bold mb-4 text-white">What We Do</h3>
                 <p className="text-white/90 text-lg">
                   We use AI to read prescriptions and instantly find families better hospital rates, 
                   saving them thousands of rupees on quality healthcare.
@@ -1302,7 +1302,7 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-6">
                   <Eye className="h-10 w-10 text-primary-600" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
+                <h3 className="text-2xl font-bold mb-4 text-white">Our Vision</h3>
                 <p className="text-white/90 text-lg">
                   An India where every family can access quality healthcare without fear of bankruptcy, 
                   where prices are transparent and options are clear.
@@ -1314,7 +1314,7 @@ const Home = () => {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-white rounded-2xl mb-6">
                   <Award className="h-10 w-10 text-primary-600" />
                 </div>
-                <h3 className="text-2xl font-bold mb-4">Our Promise</h3>
+                <h3 className="text-2xl font-bold mb-4 text-white">Our Promise</h3>
                 <p className="text-white/90 text-lg">
                   We will always provide our basic service free to families in need, 
                   because healthcare guidance should never be a luxury.
@@ -1368,17 +1368,17 @@ const Home = () => {
             <p className="text-xl text-gray-600 text-width">Simple, fast, and always focused on saving you money</p>
           </div>
           <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
-            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: '#efe5d2' }}>
+            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: 'var(--color-cream-medium)' }}>
               <Camera className="h-10 w-10 text-primary-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Upload Prescription</h3>
               <p className="text-gray-600 mb-4 text-center">Snap a photo or upload your doctor's prescription. Our AI reads it instantly and finds you better hospital rates.</p>
             </div>
-            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: '#efe5d2' }}>
+            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: 'var(--color-cream-medium)' }}>
               <FormInput className="h-10 w-10 text-primary-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Fill Details</h3>
               <p className="text-gray-600 mb-4 text-center">No prescription? Just fill in your procedure details and we'll do the rest—get instant hospital options and savings.</p>
             </div>
-            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: '#efe5d2' }}>
+            <div className="flex-1 rounded-2xl p-8 shadow-md flex flex-col items-center" style={{ backgroundColor: 'var(--color-cream-medium)' }}>
               <CheckCircle className="h-10 w-10 text-success-600 mb-4" />
               <h3 className="text-xl font-bold mb-2 text-gray-900">Get Results</h3>
               <p className="text-gray-600 mb-4 text-center">Receive verified hospital options with negotiated rates—see exactly how much you can save, instantly.</p>
@@ -1417,7 +1417,7 @@ const Home = () => {
             {leadership.map((member, index) => (
               <div key={index} className="group relative">
                 {/* Card */}
-                <div className="backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-primary-200 hover:-translate-y-2" style={{ backgroundColor: 'rgba(239, 229, 210, 0.8)' }}>
+                <div className="backdrop-blur-sm rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 hover:border-primary-200 hover:-translate-y-2" style={{ backgroundColor: 'var(--color-cream-accent)' }}>
                   {/* Status Badge */}
                   <div className="absolute -top-3 -right-3 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
                     Available
@@ -1492,9 +1492,9 @@ const Home = () => {
               <a
                 href="tel:+919029466003"
                 className="block w-full text-primary-600 py-4 px-6 rounded-xl font-bold text-center transition-colors duration-300"
-                style={{ backgroundColor: '#efe5d2' }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
+                style={{ backgroundColor: 'var(--color-cream-medium)' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-cream-dark)'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--color-cream-medium)'}
               >
                 Call Now
               </a>
@@ -1510,9 +1510,9 @@ const Home = () => {
               <a
                 href="mailto:hospeezy1@outlook.com"
                 className="block w-full text-secondary-600 py-4 px-6 rounded-xl font-bold text-center transition-colors duration-300"
-                style={{ backgroundColor: '#efe5d2' }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
+                style={{ backgroundColor: 'var(--color-cream-medium)' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-cream-dark)'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--color-cream-medium)'}
               >
                 Email Us
               </a>
@@ -1528,9 +1528,9 @@ const Home = () => {
               <a
                 href="https://share.google/Yfa8Ft8IO5GWsRXAp"
                 className="block w-full text-success-600 py-4 px-6 rounded-xl font-bold text-center transition-colors duration-300"
-                style={{ backgroundColor: '#efe5d2' }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
-                onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
+                style={{ backgroundColor: 'var(--color-cream-medium)' }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-cream-dark)'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--color-cream-medium)'}
               >
                 Find Us
               </a>
@@ -1538,7 +1538,7 @@ const Home = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50" style={{ backgroundColor: 'rgba(239, 229, 210, 0.8)' }}>
+          <div className="backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/50" style={{ backgroundColor: 'var(--color-cream-accent)' }}>
             <div className="text-center mb-8">
               <h3 className="text-3xl font-bold text-gray-900 mb-4">Send us a Message</h3>
               <p className="text-gray-600">Get personalized medical guidance from our expert team</p>
@@ -1709,9 +1709,9 @@ const Home = () => {
             <button
               onClick={() => document.getElementById('tools')?.scrollIntoView({ behavior: 'smooth' })}
               className="text-primary-600 px-12 py-6 rounded-2xl font-bold text-2xl transition-all duration-300 shadow-lg flex items-center space-x-4"
-              style={{ backgroundColor: '#efe5d2' }}
-              onMouseEnter={(e) => e.target.style.backgroundColor = '#e5d9c0'}
-              onMouseLeave={(e) => e.target.style.backgroundColor = '#efe5d2'}
+              style={{ backgroundColor: 'var(--color-white-pure)' }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--color-white-warm)'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--color-white-pure)'}
             >
               <FormInput className="h-8 w-8" />
               <span>Fill Details Now</span>
@@ -1732,7 +1732,7 @@ const Home = () => {
         const procedure = hospitalResult.hospital.procedure || '—';
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="rounded-3xl shadow-2xl p-8 max-w-lg w-full relative" style={{ backgroundColor: '#efe5d2' }}>
+            <div className="rounded-3xl shadow-2xl p-8 max-w-lg w-full relative" style={{ backgroundColor: 'var(--color-white-pure)' }}>
               <button
                 onClick={() => setModalStep(null)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold"
